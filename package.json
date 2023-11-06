@@ -41,5 +41,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This is Front-End React app for Papay food delivery project.",
+  "main": "index.tsx",
+  "repository": "https://github.com/AbdujalolAndy/Papay-React.git",
+  "author": "Abdujalol, Andy <mrarnoldunlimited@gmail.com>",
+  "license": "MIT"
 }
