@@ -51,5 +51,8 @@
   "main": "index.tsx",
   "repository": "https://github.com/AbdujalolAndy/Papay-React.git",
   "author": "Abdujalol, Andy <mrarnoldunlimited@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react-router": "^5.1.20"
+  }
 }

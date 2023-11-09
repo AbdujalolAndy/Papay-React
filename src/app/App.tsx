@@ -1,8 +1,13 @@
 import '../css/App.css';
 import { Container, Stack, Box, Typography, Button } from '@mui/material';
-import { BrowserRouter as Router, Switch, Route,NavLink } from "react-router-dom"
-import Users from './components/users';
-import Dishes from './components/dishes';
+import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom"
+import { RestaurantPage } from './screens/RestaurantPage';
+import { CommunityPage } from './screens/CommunityPage';
+import { OrdersPage } from './screens/OrdersPage';
+import { MemberPage } from './screens/MemberPage';
+import { HelpPage } from './screens/HelpPage';
+import { LoginPage } from './screens/LoginPage';
+import { HomePage } from './screens/HomePage';
 
 
 const App = () => {
@@ -11,41 +16,54 @@ const App = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/restaurant">RestaurantPage</NavLink>
           </li>
           <li>
-            <NavLink to="/dishes">Dishes</NavLink>
+            <NavLink to="/community">CommunityPage</NavLink>
           </li>
           <li>
-            <NavLink to="/users">Users</NavLink>
+            <NavLink to="/orders">OrdersPage</NavLink>
+          </li>
+          <li>
+            <NavLink to="/member-page">MemberPage</NavLink>
+          </li>
+          <li>
+            <NavLink to="/help">HelpPage</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">LoginPage</NavLink>
+          </li>
+          <li>
+            <NavLink to="/">HomePage</NavLink>
           </li>
         </ul>
       </nav>
 
       <Switch>
-        <Route path='/dishes'>
-          <Dishes />
+        <Route path='/restaurant'>
+          <RestaurantPage />
         </Route>
-        <Route path='/users'>
-          <Users />
+        <Route path='/community'>
+          <CommunityPage />
+        </Route>
+        <Route path='/orders'>
+          <OrdersPage />
+        </Route>
+        <Route path='/member-page'>
+          <MemberPage />
+        </Route>
+        <Route path='/help'>
+          <HelpPage />
+        </Route>
+        <Route path='/login'>
+          <LoginPage />
         </Route>
         <Route path='/'>
-          <Container>
-            <Home />
-          </Container>
+          <HomePage />
         </Route>
       </Switch>
     </Router>
   );
 }
-
-const Home = () => {
-  return (
-    <h2>Home</h2>
-  )
-}
-
-
-
 
 export default App;
