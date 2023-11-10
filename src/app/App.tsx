@@ -8,12 +8,26 @@ import { MemberPage } from './screens/MemberPage';
 import { HelpPage } from './screens/HelpPage';
 import { LoginPage } from './screens/LoginPage';
 import { HomePage } from './screens/HomePage';
-
+import { NavbarHome } from './components/header';
+import { NavbarRestaurant } from './components/header/restaurant';
+import { NavbarOthers } from './components/header/others';
+import "../css/navbar.css";
+import { useState } from 'react';
 
 const App = () => {
+  const main_path = window.location.pathname;
+  const [path, setPath]= useState();
+
   return (
     <Router>
-      <nav>
+
+      {main_path == "/" ? (
+        <NavbarHome setPath = {setPath}/>
+      ) : main_path.includes('/restaurant') ? (
+        <NavbarRestaurant setPath = {setPath}/>
+      ) : (<NavbarOthers setPath = {setPath}/>
+      )}
+      {/* <nav>
         <ul>
           <li>
             <NavLink to="/restaurant">RestaurantPage</NavLink>
@@ -37,7 +51,7 @@ const App = () => {
             <NavLink to="/">HomePage</NavLink>
           </li>
         </ul>
-      </nav>
+      </nav> */}
 
       <Switch>
         <Route path='/restaurant'>

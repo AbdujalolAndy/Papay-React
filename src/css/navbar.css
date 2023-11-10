@@ -1,0 +1,96 @@
+.home_navbar {
+    width: 100%; /* Use viewport width instead of a percentage */
+    height: 773px; /* Use viewport height instead of a fixed pixel value */
+    display: flex;
+    background-image: url("/public/restaurant/home_layout.png");
+    background-size: cover;
+    background-position: center; /* Center the background image */
+    margin: 0; /* Remove default margin on the body */
+}
+
+
+.format.home_navbar .navbar_config {
+    width: 1244.69px;
+    height: 46px;
+    margin-left: 26px;
+    margin-top: 55px;
+}
+
+.home_navbar .navbar_links {
+    width: 752px;
+    height: 46px;
+}
+
+.home_navbar a {
+    text-decoration: none;
+
+}
+
+.home_navbar .hover-line a {
+    color: #ffffff;
+}
+
+.home_navbar .underline {
+    display: block;
+    content: "";
+    border-bottom: solid 2px #d7b686;
+}
+
+.home_navbar .hover-line:after {
+    display: block;
+    content: "";
+    border-bottom: solid 2px #d7b686;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+.home_navbar .hover-line:hover:after {
+    transform: scaleX(1);
+}
+
+.home_navbar .head_information {
+    display: flex;
+    flex-direction: row;
+    width: 1290px;
+    height: 477px;
+}
+
+.home_navbar .define_restaurant {
+    position: relative;
+    width: 483.995px;
+    margin-top: 40px;
+    height: 143.002px;
+    color: #FFF;
+
+    font-family: Poppins;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.home_navbar .timeline_service {
+    position: relative;
+    width: 465.996px;
+    height: 28px;
+    margin-top: 30px;
+
+    color: #D4D4D4;
+    font-family: Poppins;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.home_navbar .big_img {
+    position: relative;
+    width: 277px;
+    height: 277px;
+    margin-top: 41px;
+    margin-left: 494px;
+    background-image: url("/public/home/big_img.png");
+    border-radius: 90px 0 0 0;
+    filter: invert(46%) blur(1px);
+    background-size: cover;
+}
