@@ -12,46 +12,23 @@ import { NavbarHome } from './components/header';
 import { NavbarRestaurant } from './components/header/restaurant';
 import { NavbarOthers } from './components/header/others';
 import "../css/navbar.css";
+import "../css/footer.css";
 import { useState } from 'react';
+import { Footer } from './components/footer';
 
 const App = () => {
   const main_path = window.location.pathname;
-  const [path, setPath]= useState();
+  const [path, setPath] = useState();
+  console.log(path)
 
   return (
     <Router>
-
       {main_path == "/" ? (
-        <NavbarHome setPath = {setPath}/>
+        <NavbarHome setPath={setPath} />
       ) : main_path.includes('/restaurant') ? (
-        <NavbarRestaurant setPath = {setPath}/>
-      ) : (<NavbarOthers setPath = {setPath}/>
+        <NavbarRestaurant setPath={setPath} />
+      ) : (<NavbarOthers setPath={setPath} />
       )}
-      {/* <nav>
-        <ul>
-          <li>
-            <NavLink to="/restaurant">RestaurantPage</NavLink>
-          </li>
-          <li>
-            <NavLink to="/community">CommunityPage</NavLink>
-          </li>
-          <li>
-            <NavLink to="/orders">OrdersPage</NavLink>
-          </li>
-          <li>
-            <NavLink to="/member-page">MemberPage</NavLink>
-          </li>
-          <li>
-            <NavLink to="/help">HelpPage</NavLink>
-          </li>
-          <li>
-            <NavLink to="/login">LoginPage</NavLink>
-          </li>
-          <li>
-            <NavLink to="/">HomePage</NavLink>
-          </li>
-        </ul>
-      </nav> */}
 
       <Switch>
         <Route path='/restaurant'>
@@ -76,7 +53,9 @@ const App = () => {
           <HomePage />
         </Route>
       </Switch>
+      <Footer />
     </Router>
+
   );
 }
 
