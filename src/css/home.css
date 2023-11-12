@@ -47,3 +47,19 @@
     font-weight: 500;
     line-height: normal;
 }
+
+.homePage .top_restaurant_frame {
+    height: 605px;
+    width: 100%;
+    display: flex;
+    background-color: #0b0e11;
+}
+
+.homePage .category_title {
+    color: #E3C08D;
+    font-family: Roboto;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
