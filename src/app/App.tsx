@@ -1,4 +1,3 @@
-import '../css/App.css';
 import { Container, Stack, Box, Typography, Button } from '@mui/material';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom"
 import { RestaurantPage } from './screens/RestaurantPage';
@@ -11,15 +10,16 @@ import { HomePage } from './screens/HomePage';
 import { NavbarHome } from './components/header';
 import { NavbarRestaurant } from './components/header/restaurant';
 import { NavbarOthers } from './components/header/others';
-import "../css/navbar.css";
-import "../css/footer.css";
 import { useState } from 'react';
 import { Footer } from './components/footer';
+import "../css/navbar.css";
+import '../css/App.css';
+import "../css/footer.css";
+
 
 const App = () => {
   const main_path = window.location.pathname;
   const [path, setPath] = useState();
-  console.log(path)
 
   return (
     <Router>
