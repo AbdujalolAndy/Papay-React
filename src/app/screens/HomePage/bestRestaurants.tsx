@@ -11,7 +11,7 @@ export function BestRestaurants() {
     return (
         <div className="best_restaurant_frame">
             <img src={"icons/line-group.svg"} style={{ position: "absolute", left: "6%", transform: "90deg" }} />
-            <Container sx={{ mt: "153px" }}>
+            <Container sx={{ pt: "153px" }}>
                 <Stack flexDirection={"column"} alignItems={"center"}>
                     <Box className="category_title">Zo'r restaurantlar</Box>
                     <Stack flexDirection={"row"} mt={"43px"}>
