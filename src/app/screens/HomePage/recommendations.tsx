@@ -43,7 +43,7 @@ export function Recommmendations() {
                                     </Stack>
                                 )
                             })}
-                            <Box className="article_category">Ko'p ko'rilgan</Box>
+                            <Box className="article_category">Ko'p yoqtirilgan</Box>
                             {[1, 2].map(() => {
                                 return (
                                     <Stack className="article_box">
@@ -79,7 +79,6 @@ export function Recommmendations() {
                             </Box>
                         </Stack>
                     </Stack>
-
                 </Stack>
             </Container>
         </div>
