@@ -12,7 +12,72 @@ import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import Marginer from "../../components/marginer";
 
 export function AllRestaurants() {
-    const order_list = Array.from(Array(8).keys());
+    const order_list = [
+        {
+            img: "/restaurant/kfc.jpeg",
+            title: "KFC Restaurant",
+            location: "Toshkent, Eski Qo'yliq",
+            call: "+99890 3445678",
+            views: 30,
+            likes: 40
+        },
+        {
+            img: "/restaurant/img2.png",
+            title: "Evos Restaurant",
+            location: "Toshkent, Cholchinoz",
+            call: "+99890 6887561",
+            views: 24,
+            likes: 18
+        },
+        {
+            img: "/restaurant/Nusr.jpeg",
+            title: "NusrEl Restaurant",
+            location: "Toshkent, Chilonzor Metro",
+            call: "+99890 3201122",
+            views: 34,
+            likes: 25
+        },
+        {
+            img: "/restaurant/pizza_hut.jpeg",
+            title: "Pizza Hut Restaurant",
+            location: "Toshkent, Mustaqillik",
+            call: "+99891 4553452",
+            views: 39,
+            likes: 35
+        },
+        {
+            img: "/restaurant/steakout.jpeg",
+            title: "Steakout Restaurant",
+            location: "Toshkent, Eski Qo'yliq",
+            call: "+99890 78954356",
+            views: 20,
+            likes: 18
+        },
+        {
+            img: "/restaurant/burak.jpeg",
+            title: "Burak Restaurant",
+            location: "Toshkent, Yangi Avlod",
+            call: "+99890 77777777",
+            views: 60,
+            likes: 40
+        },
+        {
+            img: "/restaurant/kfc.jpeg",
+            title: "KFC Restaurant",
+            location: "Toshkent, Eski Qo'yliq",
+            call: "+99890 3445678",
+            views: 30,
+            likes: 40
+        },
+        {
+            img: "/restaurant/texas_de.jpeg",
+            title: "Texas De Brazil Restaurant",
+            location: "Toshkent, Mega Planet",
+            call: "+99890 4567321",
+            views: 30,
+            likes: 10
+        }
+    ];
     console.log(order_list)
     return (
         <div className="all_restaurant">
@@ -20,7 +85,7 @@ export function AllRestaurants() {
                 <Stack flexDirection={"column"} alignItems={"center"}>
                     <Box className={"fil_search_box"}>
                         <Box className="fil_box">
-                            <a>Zo'r</a>
+                            <a style={{ cursor: "pointer" }}>Zo'r</a>
                             <a>Mashhur</a>
                             <a>Trendagi</a>
                             <a>Yangi</a>
@@ -46,7 +111,7 @@ export function AllRestaurants() {
                     </Box>
                     <Stack className={"all_res_box"}>
                         <CssVarsProvider>
-                            {order_list.map(() => {
+                            {order_list.map((value) => {
                                 return (
                                     <Card
                                         variant="outlined"
@@ -59,7 +124,7 @@ export function AllRestaurants() {
                                     >
                                         <CardOverflow>
                                             <AspectRatio ratio={"1"}>
-                                                <img src="/restaurant/burak.jpeg" />
+                                                <img src={value.img} />
                                             </AspectRatio>
                                             <IconButton
                                                 size="md"
@@ -83,7 +148,7 @@ export function AllRestaurants() {
                                             </IconButton>
                                         </CardOverflow>
                                         <Typography level="h2" sx={{ fontSize: 'md', mt: 2 }}>
-                                            Texas De Brazil restaurant
+                                            {value.title}
                                         </Typography>
                                         <Typography level="body-md" sx={{ mt: 0.5, mb: 2 }}>
                                             <Link
@@ -91,7 +156,7 @@ export function AllRestaurants() {
                                                 startDecorator={<LocationOnRoundedIcon />}
                                                 textColor={"neutral.700"}
                                             >
-                                                Tashkent, Yunus Abad 4-1
+                                                {value.location}
                                             </Link>
                                         </Typography>
                                         <Typography level="body-md" sx={{ mt: 0.5, mb: 2 }}>
@@ -100,7 +165,7 @@ export function AllRestaurants() {
                                                 startDecorator={<CallIcon />}
                                                 textColor={"neutral.700"}
                                             >
-                                                99890 7568772
+                                                {value.call}
                                             </Link>
                                         </Typography>
                                         <CardOverflow
@@ -120,7 +185,7 @@ export function AllRestaurants() {
                                                     }}
 
                                                 >
-                                                    100
+                                                    {value.views}
                                                     <VisibilityIcon sx={{ fontSize: 20, marginLeft: "5px" }} />
                                                 </Typography>
                                                 <Marginer direction="vertical" width="1" bg="#575757" />
@@ -132,7 +197,7 @@ export function AllRestaurants() {
                                                         fontWeight: "md",
                                                         fontSize: "16px"
                                                     }}>
-                                                    <div>50</div>
+                                                    <div>{value.likes}</div>
                                                     <Favorite sx={{ fontSize: 20, marginLeft: "5px" }} />
                                                 </Typography>
                                             </CardContent>

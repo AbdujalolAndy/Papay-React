@@ -31,6 +31,8 @@
 
 .restaurant_page .all_restaurant .fil_box a {
     position: relative;
+    cursor: pointer;
+    text-decoration: none;
 
     display: flex;
     font-family: "Quicksand";
