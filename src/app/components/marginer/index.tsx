@@ -10,7 +10,7 @@ export interface IMarginerProps {
 
 const HorizontalMargin = styled.span<IMarginerProps>
     `display: flex;
-min-width:${({ width }) => `${width}px`};
+min-width:${({ width }) => `${width}`};
 min-height:${({ height }) => `${height}px`};
 background: ${({ bg }) => `${bg}`}`;
 

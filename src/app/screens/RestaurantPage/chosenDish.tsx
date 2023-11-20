@@ -1,43 +1,32 @@
-import { Box, Container, Stack } from "@mui/material";
+import React from "react";
+import { Box, Container, Stack } from '@mui/material';
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
-import { Navigation, Pagination } from 'swiper';
-SwiperCore.use([Navigation, Pagination]);
+import SwiperCore, { Autoplay, FreeMode, Navigation, Pagination, Thumbs } from "swiper";
+SwiperCore.use([Autoplay, Navigation, Pagination]);
+
 
 const chosen_list = Array.from(Array(3).keys())
 export function ChosenDish() {
     return (
         <div className="chosen_dish_page">
             <Container className="dish_container">
-                <Stack sx={{ position: "relative" }} alignContent={"center"} justifyContent={"center"}
-                    width={"50%"}
+                <Swiper
+                    className={"chosen_dish_slider"}
+                    loop={true}
+                    spaceBetween={10}
+                    navigation={true}
+                    modules={[FreeMode, Navigation, Thumbs]}
                 >
-                    <Swiper
-                        className={"events_info swiper-wrapper"}
-                        slidesPerView={"auto"}
-                        spaceBetween={30}
-                        navigation={{
-                            nextEl: ".swiper-button-next",
-                            prevEl: ".swiper-button-prev",
-                        }}
-                        pagination={{
-                            el: ".swiper-pagination",
-                            clickable: true
-                        }}
-                        autoplay={{
-                            delay: 2000,
-                            disableOnInteraction: true
-                        }}
-                    >
-                        <SwiperSlide className="events_info_frame">
-                            <div className="dish_img">
-                                <img src={"/others/sandvich.jpg"} className={"dish_img"} />
-                            </div>
-                        </SwiperSlide>
-                    </Swiper>
-                </Stack>
+                    {chosen_list.map((ele, index) => { 
+                        const img_path = "/others/sandvich.jpg"
+                        return (
+                            <SwiperSlide>
+                                <img src={img_path} style={{ width: "100%", height: "100%" }} />
+                            </SwiperSlide>
+            )
+                    })}
+                </Swiper>
             </Container>
-        </div>
+        </div >
     )
 }
