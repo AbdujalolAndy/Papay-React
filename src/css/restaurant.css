@@ -838,6 +838,7 @@
     right: 15%;
 }
 
+
 /** CHOSEN DISH PAGE */
 
 .restaurant_page .chosen_dish_page {
@@ -989,19 +990,6 @@
     font-size: 15px;
     line-height: 22px;
     color: #ffffff;
-}
-
-.swiper {
-    width: 100%;
-    height: 100%;
-}
-
-.swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
 }
 
 /*End ChosenDish*/
