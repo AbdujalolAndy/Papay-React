@@ -156,6 +156,8 @@ export function OneRestaurant() {
                                                         icon={
                                                             <RemoveRedEye style={{ color: "white" }} />
                                                         }
+                                                        /*@ts-ignore*/
+                                                        checked={true}
                                                     />
                                                 </Badge>
                                             </Button>
