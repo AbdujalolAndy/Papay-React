@@ -10,6 +10,8 @@ import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
 import { MySettings } from "./mySettings";
+import { TuiEditor } from "../../components/tuiEditor/tuiEditor";
+import { TViewer } from "../../components/tuiEditor/tviewer";
 
 export function VisitMyPage() {
 
@@ -60,25 +62,29 @@ export function VisitMyPage() {
                                 <TabPanel value={"2"}>
                                     <Box className="menu_name">Followers</Box>
                                     <Box className="menu_content">
-                                        <MemberFollowers action_enabled={true}/>
+                                        <MemberFollowers action_enabled={true} />
                                     </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"3"}>
                                     <Box className="menu_name">Following</Box>
                                     <Box className="menu_content">
-                                        <MemberFollowing action_enabled={true}/>
+                                        <MemberFollowing action_enabled={true} />
                                     </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"4"}>
                                     <Box className="menu_name">Maqola Yozish</Box>
-                                    <Box className="write_content"></Box>
+                                    <Box className="write_content">
+                                        <TuiEditor />
+                                    </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"5"}>
                                     <Box className="menu_name">Tanlangan Maqola</Box>
-                                    <Box className="menu_content"></Box>
+                                    <Box className="menu_content">
+                                        <TViewer text={`<h3>Hello</h3>`} />
+                                    </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"6"}>
