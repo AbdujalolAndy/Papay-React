@@ -32,7 +32,7 @@ export const CommunityChats = (props: any) => {
                         flexDirection={"row"}
                         sx={{ m: "10px 0" }}
                     >
-                        <Avatar alt="andy" src={"/community/cute_girl.jpg"} />
+                        <Avatar alt="andy" src={"/community/avatar_ex_2.jpg"} />
                         <div className="msg_left">Va alaykum Assalom. Hormang</div>
                     </Box>
                     <Box
@@ -60,7 +60,7 @@ export const CommunityChats = (props: any) => {
                         justifyContent={"flex-start"}
                         sx={{ m: "10px 0" }}
                     >
-                        <Avatar alt="andy" src={"/community/cute_girl.jpg"} />
+                        <Avatar alt="andy" src={"/community/avatar_ex_2.jpg"} />
                         <div className="msg_left">Mayli mayli Nimayam derdim endi.</div>
                     </Box>
                     <Box

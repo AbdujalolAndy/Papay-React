@@ -58,16 +58,15 @@ export function CommunityPage() {
                                         <TargetArticles targetBoArticles={targetBoArticles} />
                                     </TabPanel>
                                     <TabPanel value="2">
-                                        <TargetArticles targetBoArticles={targetBoArticles.slice(0,2).reverse()} />
+                                        <TargetArticles targetBoArticles={targetBoArticles.slice(0, 2).reverse()} />
                                     </TabPanel>
                                     <TabPanel value="3">
-                                        <TargetArticles targetBoArticles={targetBoArticles.concat(targetBoArticles.slice(0,2).reverse())} />
+                                        <TargetArticles targetBoArticles={targetBoArticles.concat(targetBoArticles.slice(0, 2).reverse())} />
                                     </TabPanel>
                                     <TabPanel value="4">
                                         <TargetArticles targetBoArticles={targetBoArticles.reverse()} />
                                     </TabPanel>
                                 </Box>
-
                                 <Box className="article_bott">
                                     <Pagination
                                         page={pagination}

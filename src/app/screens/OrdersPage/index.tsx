@@ -6,10 +6,9 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import FinishedOrders from "../../components/orders/finishedOrders";
-import ProcessOrders from "../../components/orders/processOrders";
-import PausedOrders from "../../components/orders/pausedOrders";
+import FinishedOrders from "./finishedOrders";
+import ProcessOrders from "./processOrders";
+import PausedOrders from "./pausedOrders";
 import Marginer from "../../components/marginer";
 
 

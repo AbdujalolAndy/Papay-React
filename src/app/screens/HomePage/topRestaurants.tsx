@@ -13,7 +13,6 @@ import Divider from '@mui/joy/Divider';
 import Marginer from "../../components/marginer";
 
 
-
 export function TopRestaurants() {
     return (
         <div className="top_restaurant_frame">
