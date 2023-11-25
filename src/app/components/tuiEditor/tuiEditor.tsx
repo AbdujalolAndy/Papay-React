@@ -59,6 +59,7 @@ export const TuiEditor = (props: any) => {
                 placeholder="Type here"
                 previewStyle="vertical"
                 height="640px"
+                hideModeSwitch={true}
                 initialEditType="wysiwyg"
                 toolbarItems={[
                     ["heading", "bold", "italic", "strike"],

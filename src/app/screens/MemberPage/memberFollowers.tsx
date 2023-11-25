@@ -7,7 +7,7 @@ interface MemberFollowers {
 const followers = [
     { mb_nick: "botir", following: true, user_img: "/auth/default_user.svg" },
     { mb_nick: "andy", following: false, user_img: "/community/avatar_ex_2.jpg" },
-    { mb_nick: "jonibek", following: true, user_img: "/community/avatar_ex_1.jpg" },
+    { mb_nick: "jonibek", following: true, user_img: "/community/avatar_ex_4.jpg" },
 ]
 
 export function MemberFollowers(props: any) {
