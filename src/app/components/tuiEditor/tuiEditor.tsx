@@ -52,7 +52,7 @@ export const TuiEditor = (props: any) => {
                 </Box>
             </Stack>
 
-            {/*@ts-ignore*/}
+
             <Editor
                 //@ts-ignore
                 ref={editorRef}

@@ -7,18 +7,18 @@ import { Advertisements } from "./advertisements";
 import { Events } from './events';
 import { Recommmendations } from './recommendations';
 import "../../../css/home.css"
-import { Box, Stack } from "@mui/material";
+
 
 export function HomePage() {
     return (
         <div className="homePage">
             <Statistics />
-            <TopRestaurants/>
+            <TopRestaurants />
             <BestRestaurants />
             <BestDishes />
             <Advertisements />
             <Events />
             <Recommmendations />
-        </div>
+        </div >
     )
 }

@@ -15,6 +15,7 @@ import { Footer } from './components/footer';
 import "../css/navbar.css";
 import '../css/App.css';
 import "../css/footer.css";
+import Car from './screens/testCar';
 
 
 const App = () => {
@@ -50,7 +51,8 @@ const App = () => {
           <LoginPage />
         </Route>
         <Route path='/'>
-          <HomePage />
+          {/* <HomePage /> */}
+          <Car />
         </Route>
       </Switch>
       <Footer />
