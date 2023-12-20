@@ -1,8 +1,9 @@
-import react from "react";
+import react, { useState } from "react";
 import { Box, Button, Container, Stack, IconButton, Badge } from "@mui/material";
 import { NavLink } from 'react-router-dom';
 
 export function NavbarHome(props: any) {
+    const [value, setValue] = useState(24);
     return (
         <div className="home_navbar format">
             <Container>
@@ -68,9 +69,9 @@ export function NavbarHome(props: any) {
                         <Box className="define_restaurant">
                             The Authentic Restaurant & Cafe
                         </Box>
-                        <Box className="timeline_service">24 soat xizmatingizdamiz.</Box>
+                        <Box className="timeline_service">{value} soat xizmatingizdamiz.</Box>
                         <Box sx={{ mt: "90px" }}>
-                            <Button variant="contained" style={{ width: "210px;", height: "60px", background: "#1976D2", color: "#ffffff" }}>
+                            <Button onClick={() => setValue(value + 1)} variant="contained" style={{ width: "210px;", height: "60px", background: "#1976D2", color: "#ffffff" }}>
                                 RO’YHATDAN O’TISH
                             </Button>
                         </Box>

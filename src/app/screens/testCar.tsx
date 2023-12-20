@@ -15,10 +15,10 @@ class Car extends Component {
         console.log("ran componentDidMount")
     }
     componentWillUnmount(): void {
-
+        console.log("ran componentWillUnmount")
     }
     componentDidUpdate() {
-
+        console.log("ran componentDidUpdate")
     }
     changeColor() {
         this.state.color === "blue" ? this.setState({ color: "red" }) : this.setState({ color: "blue" })
