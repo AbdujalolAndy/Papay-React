@@ -1,14 +1,17 @@
 import react, { useState, useEffect } from "react";
 import { Box, Button, Container, Stack, IconButton, Badge } from "@mui/material";
 import { NavLink } from 'react-router-dom';
+import { isClassStaticBlockDeclaration } from "typescript";
 
 export function NavbarHome(props: any) {
     const [value, setValue] = useState(24);
     const [condition, setCondition] = useState(true);
 
-    useEffect(() => {
-        setValue(value + 1)
-    }, [condition])
+    const [quantity, setQuantity] = useState({count:0})
+    function clickHandler(){
+        const newQuantity = { count: quantity.count + 1 };
+        setQuantity(newQuantity);
+    }
     return (
         <div className="home_navbar format">
             <Container>
@@ -74,9 +77,9 @@ export function NavbarHome(props: any) {
                         <Box className="define_restaurant">
                             The Authentic Restaurant & Cafe
                         </Box>
-                        <Box className="timeline_service">{value} soat xizmatingizdamiz.</Box>
+                        <Box className="timeline_service">{quantity.count} soat xizmatingizdamiz.</Box>
                         <Box sx={{ mt: "90px" }}>
-                            <Button onClick={() => setCondition(!condition)} variant="contained" style={{ width: "210px;", height: "60px", background: "#1976D2", color: "#ffffff" }}>
+                            <Button onClick={clickHandler} variant="contained" style={{ width: "210px;", height: "60px", background: "#1976D2", color: "#ffffff" }}>
                                 RO’YHATDAN O’TISH
                             </Button>
                         </Box>

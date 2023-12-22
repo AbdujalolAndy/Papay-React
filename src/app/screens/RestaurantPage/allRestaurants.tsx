@@ -78,7 +78,6 @@ export function AllRestaurants() {
             likes: 10
         }
     ];
-    console.log(order_list)
     return (
         <div className="all_restaurant">
             <Container>
