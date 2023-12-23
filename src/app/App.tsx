@@ -16,6 +16,7 @@ import "../css/navbar.css";
 import '../css/App.css';
 import "../css/footer.css";
 import Car from './screens/testCar';
+import AuthenticationModal from './components/auth';
 
 
 const App = () => {
@@ -55,6 +56,7 @@ const App = () => {
         </Route>
       </Switch>
       <Footer />
+      <AuthenticationModal />
     </Router>
 
   );
