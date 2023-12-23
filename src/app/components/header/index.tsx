@@ -7,7 +7,7 @@ export function NavbarHome(props: any) {
     const [value, setValue] = useState(24);
     const [condition, setCondition] = useState(true);
 
-    const [quantity, setQuantity] = useState({count:0})
+    const [quantity, setQuantity] = useState({count:24})
     function clickHandler(){
         const newQuantity = { count: quantity.count + 1 };
         setQuantity(newQuantity);
