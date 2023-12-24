@@ -11,7 +11,7 @@ class RestaurantApiService {
         this.path = serverApi
     }
 
-    async getTopRestaurants() {
+    async getTopRestaurants(): Promise<Restaurant[]> {
         try {
             const url: string = "/restaurants?order=top&page=1&limit=4",
                 result = await axios.get(this.path + url, { withCredentials: true })
@@ -24,7 +24,7 @@ class RestaurantApiService {
             throw err
         }
     }
-    async getRestaurants(data: SearchObj) {
+    async getRestaurants(data: SearchObj): Promise<Restaurant[]> {
         try {
             const url: string = `/restaurants?order=${data.order}&page=${data.page}&limit=${data.limit}`,
                 result = await axios.get(this.path + url, { withCredentials: true })

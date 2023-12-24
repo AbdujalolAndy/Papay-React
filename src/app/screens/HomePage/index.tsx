@@ -23,7 +23,6 @@ const actionDispatch = (dispatch: Dispatch) => ({
     setBestRestaurants: (data: Restaurant[]) => dispatch(setBestRestaurants(data))
 })
 
-
 export function HomePage() {
     //Initialize
     const { setTopRestaurants, setBestRestaurants } = actionDispatch(useDispatch());

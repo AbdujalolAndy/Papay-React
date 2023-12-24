@@ -20,16 +20,38 @@ import AuthenticationModal from './components/auth';
 
 
 const App = () => {
-  const main_path = window.location.pathname;
+  //Initializations
   const [path, setPath] = useState();
+  const main_path = window.location.pathname;
 
+  const [signUpOpen, setSignUpOpen] = useState(false);
+  const [logInOpen, setLogInOpen] = useState(false);
+
+  //HANDLERS
+  const handleSignUpOpen = () => setSignUpOpen(true)
+  const handleSignUpClose = () => setSignUpOpen(false)
+  const handleLogInOpen = () => setLogInOpen(true)
+  const handleLogInClose = () => setLogInOpen(false)
   return (
     <Router>
       {main_path == "/" ? (
-        <NavbarHome setPath={setPath} />
+        <NavbarHome
+          setPath={setPath}
+          handleSignUpOpen={handleSignUpOpen}
+          handleLogInOpen={handleLogInOpen}
+        />
       ) : main_path.includes('/restaurant') ? (
-        <NavbarRestaurant setPath={setPath} />
-      ) : (<NavbarOthers setPath={setPath} />
+        <NavbarRestaurant
+          setPath={setPath}
+          handleLogInOpen={handleLogInOpen}
+          handleLogInClose={handleLogInClose}
+        />
+      ) : (
+        <NavbarOthers
+          setPath={setPath}
+          handleLogInOpen={handleLogInOpen}
+          handleLogInClose={handleLogInClose}
+        />
       )}
 
       <Switch>
@@ -56,7 +78,15 @@ const App = () => {
         </Route>
       </Switch>
       <Footer />
-      <AuthenticationModal />
+      <AuthenticationModal
+        signUpOpen={signUpOpen}
+        handleSignUpOpen={handleSignUpOpen}
+        handleSignUpClose={handleSignUpClose}
+
+        logInOpen={logInOpen}
+        handleLogInOpen={handleLogInOpen}
+        handleLogInClose={handleLogInClose}
+      />
     </Router>
 
   );

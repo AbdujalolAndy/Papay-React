@@ -55,7 +55,7 @@ export function NavbarOthers(props: any) {
                             </IconButton>
                         </Box>
                         <Box>
-                            <Button variant='contained' style={{ color: "#ffffff", background: "#1976d2" }}>
+                            <Button onClick={props.handleLogInOpen} variant='contained' style={{ color: "#ffffff", background: "#1976d2" }}>
                                 KIRISH
                             </Button>
                         </Box>

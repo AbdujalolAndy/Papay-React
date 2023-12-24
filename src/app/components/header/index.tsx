@@ -2,13 +2,14 @@ import react, { useState, useEffect } from "react";
 import { Box, Button, Container, Stack, IconButton, Badge } from "@mui/material";
 import { NavLink } from 'react-router-dom';
 import { isClassStaticBlockDeclaration } from "typescript";
+import { sweetTopSuccessAlert } from "../../../lib/sweetAlert";
 
 export function NavbarHome(props: any) {
     const [value, setValue] = useState(24);
     const [condition, setCondition] = useState(true);
 
-    const [quantity, setQuantity] = useState({count:24})
-    function clickHandler(){
+    const [quantity, setQuantity] = useState({ count: 24 })
+    function clickHandler() {
         const newQuantity = { count: quantity.count + 1 };
         setQuantity(newQuantity);
     }
@@ -62,7 +63,7 @@ export function NavbarHome(props: any) {
                             </IconButton>
                         </Box>
                         <Box>
-                            <Button variant='contained' style={{ color: "#ffffff", background: "#1976d2" }}>
+                            <Button onClick={props.handleLogInOpen} variant='contained' style={{ color: "#ffffff", background: "#1976d2" }}>
                                 KIRISH
                             </Button>
                         </Box>
@@ -79,7 +80,7 @@ export function NavbarHome(props: any) {
                         </Box>
                         <Box className="timeline_service">{quantity.count} soat xizmatingizdamiz.</Box>
                         <Box sx={{ mt: "90px" }}>
-                            <Button onClick={clickHandler} variant="contained" style={{ width: "210px;", height: "60px", background: "#1976D2", color: "#ffffff" }}>
+                            <Button onClick={props.handleSignUpOpen} variant="contained" style={{ width: "210px;", height: "60px", background: "#1976D2", color: "#ffffff" }}>
                                 RO’YHATDAN O’TISH
                             </Button>
                         </Box>

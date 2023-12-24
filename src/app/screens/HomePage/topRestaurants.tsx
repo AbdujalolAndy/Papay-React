@@ -19,11 +19,11 @@ import { serverApi } from "../../../lib/config";
 
 
 // REDUX SELECTOR
+const topRestaurantsRetriever = createSelector(
+    retrieveTopRestaurants,
+    (topRestaurants) => ({ topRestaurants }))
 
 export function TopRestaurants() {
-    const topRestaurantsRetriever = createSelector(
-        retrieveTopRestaurants,
-        (topRestaurants) => ({ topRestaurants }))
     const { topRestaurants } = useSelector(topRestaurantsRetriever)
     return (
         <div className="top_restaurant_frame">
