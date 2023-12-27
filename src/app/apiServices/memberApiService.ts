@@ -3,6 +3,7 @@ import { serverApi } from "../../lib/config"
 import assert from "assert"
 import { Definer } from "../../lib/Definer";
 import { Member, Restaurant } from "../types/user";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
 
 class MemberApiService {
     private readonly path: string
@@ -36,6 +37,19 @@ class MemberApiService {
             return new_member
         } catch (err: any) {
             console.log(`ERROR::: signupRequest ${err.message}`);
+            throw err
+        }
+    }
+    async logoutRequest(): Promise<any> {
+        try {
+            const url = `${this.path}/logout`;
+            const result = await axios.get(url, { withCredentials: true });
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.state !== "fail", result?.data?.message);
+            const logout_result = result.data.state
+            return logout_result === "success"
+        } catch (err: any) {
+            console.log('ERROR: logoutRequest', err.message)
             throw err
         }
     }

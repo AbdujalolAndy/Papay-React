@@ -1,4 +1,3 @@
-import { Container, Stack, Box, Typography, Button } from '@mui/material';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom"
 import { RestaurantPage } from './screens/RestaurantPage';
 import { CommunityPage } from './screens/CommunityPage';
@@ -10,47 +9,94 @@ import { HomePage } from './screens/HomePage';
 import { NavbarHome } from './components/header';
 import { NavbarRestaurant } from './components/header/restaurant';
 import { NavbarOthers } from './components/header/others';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Footer } from './components/footer';
 import "../css/navbar.css";
 import '../css/App.css';
 import "../css/footer.css";
-import Car from './screens/testCar';
 import AuthenticationModal from './components/auth';
+import { Member } from './types/user';
+import { sweetErrorHandling, sweetFailureProvider, sweetTopSmallSuccessAlert } from '../lib/sweetAlert';
+import { serverApi } from '../lib/config';
+import MemberApiService from './apiServices/memberApiService';
+import { Definer } from "../lib/Definer";
+import "./apiServices/verify"
 
 
 const App = () => {
   //Initializations
-  const [path, setPath] = useState();
-  const main_path = window.location.pathname;
+  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(null),
+    [path, setPath] = useState(),
+    [signUpOpen, setSignUpOpen] = useState(false),
+    [logInOpen, setLogInOpen] = useState(false),
+    [anchor, setAnchor] = useState<null | HTMLElement>(null),
+    open = Boolean(anchor),
+    main_path = window.location.pathname;
 
-  const [signUpOpen, setSignUpOpen] = useState(false);
-  const [logInOpen, setLogInOpen] = useState(false);
+
+  useEffect(() => {
+    const memberDataJson = localStorage.getItem("member_data") ? localStorage.getItem("member_data") : null,
+      member_data = memberDataJson ? JSON.parse(memberDataJson) : null
+    if (member_data) {
+      member_data.mb_image = member_data.mb_image ? `${serverApi}/${member_data.mb_image}` : "/auth/default_user.svg";
+      setVerifiedMemberData(member_data);
+    }
+  }, [signUpOpen, logInOpen])
 
   //HANDLERS
-  const handleSignUpOpen = () => setSignUpOpen(true)
-  const handleSignUpClose = () => setSignUpOpen(false)
-  const handleLogInOpen = () => setLogInOpen(true)
-  const handleLogInClose = () => setLogInOpen(false)
+  const handleSignUpOpen = () => setSignUpOpen(true),
+    handleSignUpClose = () => setSignUpOpen(false),
+    handleLogInOpen = () => setLogInOpen(true),
+    handleLogInClose = () => setLogInOpen(false),
+    handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => setAnchor(event.currentTarget),
+    handleLougOutClose = () => setAnchor(null),
+    handleLogoutRequest = async () => {
+      try {
+        const memberApiService = new MemberApiService();
+        await memberApiService.logoutRequest();
+        await sweetTopSmallSuccessAlert("success", 700, true);
+      } catch (err: any) {
+        console.log(err);
+        sweetFailureProvider(Definer.general_err1);
+      }
+    };
   return (
     <Router>
       {main_path == "/" ? (
         <NavbarHome
           setPath={setPath}
+          open={open}
+          anchor={anchor}
           handleSignUpOpen={handleSignUpOpen}
           handleLogInOpen={handleLogInOpen}
+          handleLogOutClick={handleLogOutClick}
+          handleLougOutClose={handleLougOutClose}
+          handleLogout={handleLogoutRequest}
+          verifiedMemberData={verifiedMemberData}
         />
       ) : main_path.includes('/restaurant') ? (
         <NavbarRestaurant
           setPath={setPath}
+          open={open}
+          anchor={anchor}
           handleLogInOpen={handleLogInOpen}
           handleLogInClose={handleLogInClose}
+          handleLogOutClick={handleLogOutClick}
+          handleLougOutClose={handleLougOutClose}
+          handleLogout={handleLogoutRequest}
+          verifiedMemberData={verifiedMemberData}
         />
       ) : (
         <NavbarOthers
           setPath={setPath}
+          open={open}
+          anchor={anchor}
           handleLogInOpen={handleLogInOpen}
           handleLogInClose={handleLogInClose}
+          handleLogOutClick={handleLogOutClick}
+          handleLougOutClose={handleLougOutClose}
+          handleLogout={handleLogoutRequest}
+          verifiedMemberData={verifiedMemberData}
         />
       )}
 
@@ -82,14 +128,11 @@ const App = () => {
         signUpOpen={signUpOpen}
         handleSignUpOpen={handleSignUpOpen}
         handleSignUpClose={handleSignUpClose}
-
         logInOpen={logInOpen}
         handleLogInOpen={handleLogInOpen}
         handleLogInClose={handleLogInClose}
       />
     </Router>
-
   );
 }
-
 export default App;
