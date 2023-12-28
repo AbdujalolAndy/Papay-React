@@ -49,7 +49,7 @@ const App = () => {
     handleLogInOpen = () => setLogInOpen(true),
     handleLogInClose = () => setLogInOpen(false),
     handleLogOutClick = (event: React.MouseEvent<HTMLElement>) => setAnchor(event.currentTarget),
-    handleLougOutClose = () => setAnchor(null),
+    handleLogOutClose = () => setAnchor(null),
     handleLogoutRequest = async () => {
       try {
         const memberApiService = new MemberApiService();
@@ -70,7 +70,7 @@ const App = () => {
           handleSignUpOpen={handleSignUpOpen}
           handleLogInOpen={handleLogInOpen}
           handleLogOutClick={handleLogOutClick}
-          handleLougOutClose={handleLougOutClose}
+          handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           verifiedMemberData={verifiedMemberData}
         />
@@ -82,7 +82,7 @@ const App = () => {
           handleLogInOpen={handleLogInOpen}
           handleLogInClose={handleLogInClose}
           handleLogOutClick={handleLogOutClick}
-          handleLougOutClose={handleLougOutClose}
+          handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           verifiedMemberData={verifiedMemberData}
         />
@@ -94,7 +94,7 @@ const App = () => {
           handleLogInOpen={handleLogInOpen}
           handleLogInClose={handleLogInClose}
           handleLogOutClick={handleLogOutClick}
-          handleLougOutClose={handleLougOutClose}
+          handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           verifiedMemberData={verifiedMemberData}
         />

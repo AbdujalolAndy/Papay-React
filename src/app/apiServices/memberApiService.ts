@@ -4,6 +4,7 @@ import assert from "assert"
 import { Definer } from "../../lib/Definer";
 import { Member, Restaurant } from "../types/user";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
+import { MemberLiken } from "../types/others";
 
 class MemberApiService {
     private readonly path: string
@@ -49,7 +50,20 @@ class MemberApiService {
             const logout_result = result.data.state
             return logout_result === "success"
         } catch (err: any) {
-            console.log('ERROR: logoutRequest', err.message)
+            console.log(`ERROR::: logoutRequest ${err.message}`);
+            throw err
+        }
+    }
+    async memberLikeTarget(data: any) {
+        try {
+            const result = await axios.post(this.path + "/member-liken", data, { withCredentials: true })
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.state != "fail", result.data.message);
+            console.log("Like_result:::", result)
+            const result_like:MemberLiken = result.data.data;
+            return result_like
+        } catch (err: any) {
+            console.log(`ERROR::: memberLikeTarget ${err.message}`);
             throw err
         }
     }

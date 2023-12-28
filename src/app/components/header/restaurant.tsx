@@ -91,7 +91,7 @@ export function NavbarRestaurant(props: any) {
                         <Menu
                             anchorEl={props.anchor}
                             open={props.open}
-                            onClose={props.handleLougOutClose}
+                            onClose={props.handleLogOutClose}
                             PaperProps={{
                                 elevation: 0,
                                 sx: {
