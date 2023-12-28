@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveTopRestaurants } from "./selector";
 import { serverApi } from "../../../lib/config";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
@@ -44,6 +44,7 @@ export function TopRestaurants() {
             if (like_result.like_status > 0) {
                 event.target.style.fill = "red"
                 refs.current[like_result.like_ref_id].innerHTML++
+                await sweetTopSmallSuccessAlert("success", 700, false)
             } else {
                 event.target.style.fill = "white"
                 refs.current[like_result.like_ref_id].innerHTML--
@@ -80,7 +81,7 @@ export function TopRestaurants() {
                                             boxShadow: "0px 1px 5px white"
                                         }}
                                     >
-                                        <CardCover>
+                                        <CardCover >
                                             <img
                                                 src={image_path}
                                                 loading="lazy"
@@ -124,6 +125,7 @@ export function TopRestaurants() {
                                                     transform: "translateY(50%)",
                                                     color: "rgba(0,0,0,0.4)"
                                                 }}
+                                                onClick={(e) => e.stopPropagation()}
                                             >
                                                 <Favorite onClick={(e) => targetLikeTop(e, ele._id)} style={{
                                                     fill: ele?.me_liked && ele?.me_liked[0]?.my_favorite ? "red" : "white"
