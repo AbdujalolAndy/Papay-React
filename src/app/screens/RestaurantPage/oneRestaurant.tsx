@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { Favorite, FavoriteBorder, MonetizationOn, RemoveRedEye, } from "@mui/icons-material";
 import StarIcon from "@mui/icons-material/Star";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { Dispatch } from "@reduxjs/toolkit";
 import { Restaurant } from "../../types/user";
 import { setChosenRestaurant, setRandomRestaurants, setTargetProducts } from "./slice";
@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { ProductSearchObj } from "../../types/others";
 import ProductApiServvice from "../../apiServices/productApiService";
 import { serverApi } from "../../../lib/config";
+import RestaurantApiService from "../../apiServices/restaurantApiService";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -49,6 +50,7 @@ const targetProductsRetriever = createSelector(
 export function OneRestaurant() {
     //Initilization
     let { restaurant_id } = useParams<{ restaurant_id: string }>();
+    const history = useHistory()
     const { setChosenRestaurant, setRandomRestaurants, setTargetProducts } = actionDispatch(useDispatch());
     const { chosenRestaurant } = useSelector(chosenRestaurantRetriever)
     const { randomRestaurants } = useSelector(randomRestaurantsRetriever)
@@ -64,9 +66,27 @@ export function OneRestaurant() {
     })
 
     useEffect(() => {
+        const restaurantService = new RestaurantApiService();
+        restaurantService
+            .getRestaurants({ page: 1, limit: 10, order: 'random' })
+            .then(data => setRandomRestaurants(data))
+            .catch(err => console.log(err.message))
+
+
         const productService = new ProductApiServvice();
-        productService.getTargetProducts(targetProductSearchObj).then(data => setTargetProducts(data)).catch(err => console.log(err.message))
+        productService
+            .getTargetProducts(targetProductSearchObj)
+            .then(data => setTargetProducts(data))
+            .catch(err => console.log(err.message))
     }, [targetProductSearchObj])
+
+    //Handlers
+    const chosenRestaurantHandler = (id: string) => {
+        setChosenRestaurantId(id)
+        targetProductSearchObj.restaurant_mb_id = id;
+        setTargetProductSearchObj({ ...targetProductSearchObj });
+        history.push(`restaurant/${id}`)
+    }
     return (
         <div className="single_restaurant">
             <Container>
@@ -115,15 +135,17 @@ export function OneRestaurant() {
                                 prevEl: ".restaurant-prev"
                             }}
                         >
-                            {restaurant_list.map((ele, index) => {
+                            {randomRestaurants.map((ele: Restaurant) => {
+                                const image_path = `${serverApi}/${ele.mb_image}`
                                 return (
                                     <SwiperSlide
+                                        onClick={() => chosenRestaurantHandler(ele._id)}
                                         style={{ cursor: "pointer" }}
-                                        key={index}
+                                        key={ele._id}
                                         className={"restaurant_avatars"}
                                     >
-                                        <img src="/restaurant/burak.jpeg" />
-                                        <span>Burak</span>
+                                        <img src={image_path} />
+                                        <span>{ele.mb_nick}</span>
                                     </SwiperSlide>
                                 )
                             })}
