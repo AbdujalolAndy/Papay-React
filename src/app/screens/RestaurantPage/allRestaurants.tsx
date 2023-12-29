@@ -11,7 +11,35 @@ import { Favorite } from "@mui/icons-material";
 import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
 import Marginer from "../../components/marginer";
 
+//Redux Imports
+import { Dispatch } from "@reduxjs/toolkit";
+import { Restaurant } from "../../types/user";
+import { setTargetRestaurants } from "./slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
+import { createSelector } from 'reselect'
+import { retrieveTaregetRestaurants } from "./selector";
+
+//Redux Slice
+const actionDispatch = (dispatch: Dispatch) => ({
+    setTargetRestaurants: (data: Restaurant[]) => dispatch(setTargetRestaurants(data))
+})
+
+//Redux Selector
+const targetRestaurantRetriever = createSelector(
+    retrieveTaregetRestaurants,
+    (targetRestaurants) => ({targetRestaurants})
+)
+
 export function AllRestaurants() {
+    //Initilizations
+    const { setTargetRestaurants } = actionDispatch(useDispatch())
+    const { targetRestaurants } = useSelector(targetRestaurantRetriever)
+
+    useEffect(() => {
+        //Todo:for TargetRestaurant, request to backend 
+    }, [])
     const order_list = [
         {
             img: "/restaurant/kfc.jpeg",

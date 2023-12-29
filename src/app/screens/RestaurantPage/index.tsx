@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Container } from "@mui/material"
 import { Route, Switch, useRouteMatch } from "react-router-dom"
 import { ChosenDish } from "./chosenDish";
@@ -8,7 +8,6 @@ import "../../../css/restaurant.css"
 
 export function RestaurantPage() {
     const restaurant = useRouteMatch();
-
     return (
         <div className="restaurant_page">
             <Switch>
