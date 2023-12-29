@@ -54,12 +54,8 @@ export function TopRestaurants() {
         }
     }
 
-    const targetChosenRestaurant = async (id: string) => {
-        try {
-            history.push(`/restaurant/${id}`)
-        } catch (err: any) {
-
-        }
+    const targetChosenRestaurant = (id: string) => {
+        history.push(`/restaurant/${id}`)
     }
     return (
         <div className="top_restaurant_frame">

@@ -27,6 +27,7 @@ import assert from "assert";
 import MemberApiService from "../../apiServices/memberApiService";
 import { Definer } from "../../../lib/Definer";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { useHistory } from "react-router";
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -47,13 +48,18 @@ export function AllRestaurants() {
     const { targetRestaurants } = useSelector(targetRestaurantRetriever)
     const [targetSearchObj, setTargetSearchObj] = useState<SearchObj>({ page: 1, limit: 8, order: "mb_point" })
     const refs: any = useRef([])
+    const history = useHistory()
 
     useEffect(() => {
         //Todo:for TargetRestaurant, request to backend 
         const restaurant = new RestaurantApiService();
         restaurant.getRestaurants(targetSearchObj).then(data => setTargetRestaurants(data)).catch(err => console.log(err))
     }, [targetSearchObj])
+
     //Handler
+    const targetChosenRestaurant = (id: string) => {
+        history.push(`/restaurant/${id}`)
+    }
     const searchHandler = (category: string) => {
         targetSearchObj.page = 1;
         targetSearchObj.order = category;
@@ -120,10 +126,11 @@ export function AllRestaurants() {
                             return (
                                 <CssVarsProvider>
                                     <Card
+                                        onClick={()=>targetChosenRestaurant(value._id)}
                                         variant="outlined"
                                         sx={{
                                             minHeight: 410,
-                                            minWidth: 290,
+                                            width: 290,
                                             mx: "17px",
                                             my: "10px"
                                         }}
