@@ -1,19 +1,29 @@
 import { TabPanel } from "@mui/lab"
-import { Box, Button, Stack } from "@mui/material"
+import { Box, Stack } from "@mui/material"
+import {createSelector} from "reselect"
+import { retrieveFinishedOrders, retrievePausedOrders, retrieveProcessOrders } from "../../screens/OrdersPage/selector"
+import { useSelector } from "react-redux"
 
 
-const finishedOrders = [
+const finishedOrderss = [
     [1, 2, 3],
-    [1, 2, 3, 4, 5],
-    [1, 2]
+    [1, 2, 3],
+    [1, 2, 3]
 ]
+//Redux Selector;
+const finishedOrdersRetriever = createSelector(
+    retrieveFinishedOrders,
+    (finishedOrders)=>({finishedOrders})
+)
 
-export default function PausedOrders(props: any) {
+export default function FinishedOrders(props: any) {
+    //Initilizations
+    const {finishedOrders} = useSelector(finishedOrdersRetriever)
     return (
-        <TabPanel value={"1"}>
+        <TabPanel value={"3"}>
             <Stack>
                 {
-                    finishedOrders?.map((order) => {
+                    finishedOrderss?.map((order) => {
                         return (
                             <Box className="order_main_box">
                                 <Box className="order_box_scroll">
@@ -34,19 +44,18 @@ export default function PausedOrders(props: any) {
                                         )
                                     })}
                                 </Box>
-                                <Box className="total_price_box black_solid">
-                                    <Box className="boxTotal">
-                                        <p>mahsulot narxi</p>
-                                        <p>$11</p>
+
+                                <Box className="total_price_box red_solid">
+                                    <Box className="boxTotal finish_total" >
+                                        <p style={{color:"white"}}>mahsulot narxi</p>
+                                        <p style={{color:"white"}}>$22</p>
                                         <img src="/icons/plus.svg" style={{ marginLeft: "20px" }} />
-                                        <p>Yetkazish hizmati</p>
-                                        <p>$2</p>
+                                        <p style={{color:"white"}}>Yetkazish hizmati</p>
+                                        <p style={{color:"white"}}>$2</p>
                                         <img src="/icons/pause.svg" style={{ marginLeft: "20px" }} />
-                                        <p>jami narxi</p>
-                                        <p>$13</p>
+                                        <p style={{color:"white"}}>jami narxi</p>
+                                        <p style={{color:"white"}}>$24</p>
                                     </Box>
-                                    <Button variant="contained" color={"secondary"} style={{ borderRadius: "10px" }} >BEKOR QILISH</Button>
-                                    <Button variant="contained" sx={{ background: "rgb(2, 136, 209)", color: "rgb(255, 255, 255)", borderRadius: "10px" }} >TO'LASH</Button>
                                 </Box>
                             </Box>
                         )

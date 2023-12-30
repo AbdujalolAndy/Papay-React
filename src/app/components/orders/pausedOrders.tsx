@@ -1,15 +1,25 @@
 import { TabPanel } from "@mui/lab"
 import { Box, Button, Stack } from "@mui/material"
-
+import {createSelector} from "reselect"
+import { retrievePausedOrders } from "../../screens/OrdersPage/selector"
+import { useSelector } from "react-redux"
 
 const finishedOrders = [
-    [1, 2, 3, 4],
-    [1, 2],
+    [1, 2, 3],
+    [1, 2, 3, 4, 5],
+    [1, 2]
 ]
+//Redux Selector 
+const pausedOrdersRetriever = createSelector(
+    retrievePausedOrders,
+    (pausedOrders)=>({pausedOrders})
+)
 
-export default function ProcessOrders(props: any) {
+export default function PausedOrders(props: any) {
+    //Initilizations
+    const {pausedOrders} = useSelector(pausedOrdersRetriever)
     return (
-        <TabPanel value={"2"}>
+        <TabPanel value={"1"}>
             <Stack>
                 {
                     finishedOrders?.map((order) => {
@@ -33,7 +43,7 @@ export default function ProcessOrders(props: any) {
                                         )
                                     })}
                                 </Box>
-                                <Box className="total_price_box blue_solid">
+                                <Box className="total_price_box black_solid">
                                     <Box className="boxTotal">
                                         <p>mahsulot narxi</p>
                                         <p>$11</p>
@@ -44,8 +54,8 @@ export default function ProcessOrders(props: any) {
                                         <p>jami narxi</p>
                                         <p>$13</p>
                                     </Box>
-                                    <p className="data_compl">23-11-20 14:07</p>
-                                    <Button variant="contained" sx={{ background: "rgb(2, 136, 209)", color: "rgb(255, 255, 255)", borderRadius: "10px" }} >Yakunlash</Button>
+                                    <Button variant="contained" color={"secondary"} style={{ borderRadius: "10px" }} >BEKOR QILISH</Button>
+                                    <Button variant="contained" sx={{ background: "rgb(2, 136, 209)", color: "rgb(255, 255, 255)", borderRadius: "10px" }} >TO'LASH</Button>
                                 </Box>
                             </Box>
                         )
