@@ -16,7 +16,7 @@ import { Product } from "../../types/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { ProductSearchObj } from "../../types/others";
-import ProductApiServvice from "../../apiServices/productApiService";
+import ProductApiService from "../../apiServices/productApiService";
 import { serverApi } from "../../../lib/config";
 import RestaurantApiService from "../../apiServices/restaurantApiService";
 import assert from "assert";
@@ -76,8 +76,12 @@ export function OneRestaurant() {
             .then(data => setRandomRestaurants(data))
             .catch(err => console.log(err.message))
 
+        restaurantService
+            .chosenRestaurant(chosenRestaurantId)
+            .then(data => setChosenRestaurant(data))
+            .catch(err => console.log(err))
 
-        const productService = new ProductApiServvice();
+        const productService = new ProductApiService();
         productService
             .getTargetProducts(targetProductSearchObj)
             .then(data => setTargetProducts(data))
@@ -89,7 +93,7 @@ export function OneRestaurant() {
         setChosenRestaurantId(id)
         targetProductSearchObj.restaurant_mb_id = id;
         setTargetProductSearchObj({ ...targetProductSearchObj });
-        history.push(`restaurant/${id}`)
+        history.push(`/restaurant/${id}`)
     }
     const searchCollectionHandler = (collection: string) => {
         targetProductSearchObj.page = 1;
@@ -112,6 +116,9 @@ export function OneRestaurant() {
         } catch (err: any) {
             sweetErrorHandling(err).then()
         }
+    }
+    const targetChosenProduct = (id: string) => {
+        history.push(`/restaurant/dish/${id}`)
     }
     return (
         <div className="single_restaurant">
@@ -217,7 +224,11 @@ export function OneRestaurant() {
                                 const size_volume = product.product_collection === "drink" ? product.product_volume + " l" : product.product_size + " size"
                                 const image_path = `${serverApi}/${product.product_images[0]}`
                                 return (
-                                    <Box className="dish_box" key={product._id} >
+                                    <Box
+                                        className="dish_box"
+                                        key={product._id}
+                                        onClick={() => targetChosenProduct(product._id)}
+                                    >
                                         <Box
                                             className="dish_img"
                                             sx={{
@@ -233,7 +244,10 @@ export function OneRestaurant() {
                                                     badgeContent={product.product_likes} color={"primary"}
                                                 >
                                                     <Checkbox
-                                                        onClick={(event) => targetLikeProduct(event)}
+                                                        onClick={(event) => {
+                                                            targetLikeProduct(event)
+                                                            event.stopPropagation()
+                                                        }}
                                                         icon={<FavoriteBorder style={{ color: "white" }} />}
                                                         id={product._id}
                                                         checkedIcon={<Favorite style={{ color: "red" }} />}
@@ -256,6 +270,7 @@ export function OneRestaurant() {
                                             >
                                                 <Badge badgeContent={product.product_views} color={"primary"}>
                                                     <Checkbox
+                                                        onClick={(e) => e.stopPropagation()}
                                                         checked={false}
                                                         icon={
                                                             <RemoveRedEye style={{ color: "white" }} />
@@ -331,12 +346,12 @@ export function OneRestaurant() {
                     <Box
                         className="about_left"
                         sx={{
-                            backgroundImage: "url('/restaurant/texas_de.jpeg')"
+                            backgroundImage: `url(${serverApi}/${chosenRestaurant?.mb_image.replace(/\\/g, '/')})`
                         }}
                     >
                         <div className="about_left_desc">
-                            <span>Burak</span>
-                            <p>Eng mazzali oshxona</p>
+                            <span>{chosenRestaurant?.mb_nick}</span>
+                            <p>{chosenRestaurant?.mb_description}</p>
                         </div>
                     </Box>
                     <Box className="about_right">

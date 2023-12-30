@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit"
 import { setTrendProducts } from "./slice";
 import { Product } from "../../types/product";
-import ProductApiServvice from "../../apiServices/productApiService";
+import ProductApiService from "../../apiServices/productApiService";
 import { retrieveTrendProducts } from "./selector";
 import { serverApi } from "../../../lib/config";
 
@@ -25,7 +25,7 @@ export function BestDishes() {
     const { setTrendProducts } = actionDispatch(useDispatch())
     const { trendProducts } = useSelector(trendProductsRetriever)
     useEffect(() => {
-        const productService = new ProductApiServvice();
+        const productService = new ProductApiService();
         productService
             .getTargetProducts({ order: 'product_likes', page: 1, limit: 4 })
             .then(data => { setTrendProducts(data) })

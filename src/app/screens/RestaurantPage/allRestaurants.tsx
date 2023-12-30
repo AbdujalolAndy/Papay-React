@@ -126,7 +126,7 @@ export function AllRestaurants() {
                             return (
                                 <CssVarsProvider>
                                     <Card
-                                        onClick={()=>targetChosenRestaurant(value._id)}
+                                        onClick={() => targetChosenRestaurant(value._id)}
                                         variant="outlined"
                                         sx={{
                                             minHeight: 410,
@@ -156,7 +156,7 @@ export function AllRestaurants() {
                                             >
                                                 <Favorite
                                                     onClick={(e) => targetLikeHandler(e, value._id)}
-                                                    style={{ fill:value?.me_liked && value?.me_liked[0]?.my_favorite ? "red" : "white" }}
+                                                    style={{ fill: value?.me_liked && value?.me_liked[0]?.my_favorite ? "red" : "white" }}
                                                 />
                                             </IconButton>
                                         </CardOverflow>

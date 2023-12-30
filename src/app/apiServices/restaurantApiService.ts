@@ -29,11 +29,23 @@ class RestaurantApiService {
             const url: string = `/restaurants?order=${data.order}&page=${data.page}&limit=${data.limit}`,
                 result = await axios.get(this.path + url, { withCredentials: true })
             assert.ok(result, Definer.general_err1);
-            console.log("result of getRestaurants::", result.data)
             const top_restaurants: Restaurant[] = result.data.data;
             return top_restaurants
         } catch (err: any) {
             console.log(`ERROR::: getRestaurants ${err.message}`);
+            throw err
+        }
+    }
+
+    async chosenRestaurant(id: string): Promise<Restaurant> {
+        try {
+            const url = `${serverApi}/restaurants/${id}`,
+                result = await axios.get(url, { withCredentials: true })
+            assert.ok(result?.data, Definer.general_err1);
+            const chosenResturant: Restaurant = result.data.data;
+            return chosenResturant
+        } catch (err: any) {
+            console.log(`ERROR::: chosenRestaurant ${err.message}`)
             throw err
         }
     }

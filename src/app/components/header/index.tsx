@@ -72,9 +72,7 @@ export function NavbarHome(props: any) {
                             </IconButton>
                         </Box>
                         {props.verifiedMemberData ? (
-                            <Box sx={{ width: "48px", height: "48px", borderRadius: "50%" }}>
-                                <img src={props.verifiedMemberData.mb_image} alt="user" onClick={props.handleLogOutClick} />
-                            </Box>
+                            <img style={{ width: "48px", height: "48px", borderRadius: "50%" }} src={props.verifiedMemberData.mb_image} alt="user" onClick={props.handleLogOutClick} />
                         ) : (
                             <Box>
                                 <Button onClick={props.handleLogInOpen} variant='contained' style={{ color: "#ffffff", background: "#1976d2" }}>
@@ -116,7 +114,7 @@ export function NavbarHome(props: any) {
                             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                         >
                             <MenuItem
-                            onClick={props.handleLogout}
+                                onClick={props.handleLogout}
                             >
                                 <ListItem>
                                     <Logout fontSize="small" style={{ color: "blue" }} />
