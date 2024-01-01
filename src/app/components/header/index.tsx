@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
+import Basket from "./basket";
 
 
 export function NavbarHome(props: any) {
@@ -69,13 +70,7 @@ export function NavbarHome(props: any) {
                                 Yordam
                             </NavLink>
                         </Box>
-                        <Box>
-                            <IconButton aria-label="cart" id="basic-button" aria-controls={undefined} aria-haspopup="true" aria-expanded>
-                                <Badge badgeContent={3} color="secondary">
-                                    <img src={"/icons/shopping-cart.svg"} />
-                                </Badge>
-                            </IconButton>
-                        </Box>
+                            <Basket/>
                         {props.verifiedMemberData ? (
                             <img style={{ width: "48px", height: "48px", borderRadius: "50%" }} src={props.verifiedMemberData.mb_image} alt="user" onClick={props.handleLogOutClick} />
                         ) : (
