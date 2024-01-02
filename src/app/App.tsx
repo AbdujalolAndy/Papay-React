@@ -89,6 +89,26 @@ const App = () => {
     }
   };
 
+  const onRemove = (data: CartItem) => {
+    const item_data: any = cartItems.find((ele: CartItem) => ele._id === data._id);
+    if (item_data.quantity === 1) {
+      const cart_updated = cartItems.filter((ele: CartItem) => ele._id !== data._id)
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    } else {
+      const cart_updated = cartItems.map((item: CartItem) =>
+        item._id === data._id ? { ...item_data, quantity: item_data.quantity - 1 } : item
+      )
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    }
+  }
+  const onDelete = (item: CartItem) => {
+    const cart_updated = cartItems.filter((ele: CartItem) => ele._id !== item._id)
+    setCartItems(cart_updated);
+    localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+  }
+
   return (
     <Router>
       {main_path == "/" ? (
@@ -115,7 +135,9 @@ const App = () => {
           handleLogout={handleLogoutRequest}
           verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
-          onAdd = {onAdd}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
         />
       ) : (
         <NavbarOthers
@@ -133,7 +155,7 @@ const App = () => {
 
       <Switch>
         <Route path='/restaurant'>
-          <RestaurantPage onAdd = {onAdd}/>
+          <RestaurantPage onAdd={onAdd} />
         </Route>
         <Route path='/community'>
           <CommunityPage />

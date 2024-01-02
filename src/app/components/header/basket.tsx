@@ -85,7 +85,7 @@ export default function Basket(props: any) {
                                 return (
                                     <Box key={index} className="basket_info_box">
                                         <div className="cancel_btn">
-                                            <Cancel color={"primary"} />
+                                            <Cancel color={"primary"} onClick={()=>props.onDelete(product)} />
                                         </div>
                                         <img src={image_path} className="product_img" />
                                         <span className="product_name">{product.name}</span>
@@ -94,7 +94,7 @@ export default function Basket(props: any) {
                                         </p>
                                         <Box sx={{ minWidth: 120 }}>
                                             <div className="col-2">
-                                                <button className="remove" onClick={() => {/* Implement logic for remove */ }}>
+                                                <button className="remove" onClick={() => props.onRemove(product)}>
                                                     -
                                                 </button>{" "}
                                                 <button className="add" onClick={() => props.onAdd(product)}>
