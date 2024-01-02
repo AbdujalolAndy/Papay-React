@@ -73,7 +73,8 @@ export function NavbarRestaurant(props: any) {
                             cartItems={props.cartItems}
                             onAdd={props.onAdd}
                             onRemove={props.onRemove}
-                            onDelete={props.onDelete} />
+                            onDelete={props.onDelete}
+                        />
                         {props.verifiedMemberData ? (
                             <img
                                 style={{
