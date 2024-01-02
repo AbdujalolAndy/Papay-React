@@ -51,7 +51,7 @@ const targetProductsRetriever = createSelector(
 
 
 
-export function OneRestaurant() {
+export function OneRestaurant(props: any) {
     //Initilization
     let { restaurant_id } = useParams<{ restaurant_id: string }>();
     const history = useHistory()
@@ -258,6 +258,10 @@ export function OneRestaurant() {
                                             </Button>
                                             <Button
                                                 className="view_btn"
+                                                onClick={(e) => {
+                                                    props.onAdd(product)
+                                                    e.stopPropagation()
+                                                }}
                                             >
                                                 <img
                                                     src="/icons/shopping_cart.svg"
@@ -388,6 +392,6 @@ export function OneRestaurant() {
                 </Stack>
             </Container>
 
-        </div>
+        </div >
     )
 }

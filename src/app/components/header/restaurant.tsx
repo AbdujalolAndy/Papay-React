@@ -12,6 +12,7 @@ import {
     Stack,
 } from "@mui/material";
 import { Logout } from "@mui/icons-material";
+import Basket from "./basket";
 
 
 export function NavbarRestaurant(props: any) {
@@ -68,13 +69,7 @@ export function NavbarRestaurant(props: any) {
                                 Yordam
                             </NavLink>
                         </Box>
-                        <Box>
-                            <IconButton aria-label="cart" id="basic-button" aria-controls={undefined} aria-haspopup="true" aria-expanded>
-                                <Badge badgeContent={3} color="secondary">
-                                    <img src={"/icons/shopping-cart.svg"} />
-                                </Badge>
-                            </IconButton>
-                        </Box>
+                            <Basket  cartItems = {props.cartItems} onAdd = {props.onAdd}/>
                         {props.verifiedMemberData ? (
                             <img
                                 style={{

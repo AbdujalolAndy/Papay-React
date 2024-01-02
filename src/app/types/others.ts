@@ -16,3 +16,11 @@ export interface MemberLiken {
     like_ref_id: string,
     like_status: number
 }
+
+export interface CartItem {
+    _id: string;
+    quantity: number;
+    name: string;
+    price: number;
+    image: string
+}

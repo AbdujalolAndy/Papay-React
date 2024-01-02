@@ -2,24 +2,31 @@
 import { Cancel, ShoppingCart } from "@mui/icons-material";
 import { Badge, Box, Button, IconButton, Menu, Stack } from "@mui/material";
 import { useState } from "react";
+import { serverApi } from "../../../lib/config";
+import { CartItem } from "../../types/others";
 
-export default function Basket() {
-    //Initializations
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-    const open = Boolean(anchorEl)
-
-    //Handlers
+export default function Basket(props: any) {
+    // Initializations
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const { cartItems } = props;
+    const itemPrice = cartItems.reduce((a: any, c: CartItem) => a + c.price * c.quantity, 0)
+    const shippingPrice = itemPrice > 100 ? 0 : 2
+    const totalPrice = itemPrice + shippingPrice
+    // Handlers
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget)
-    }
+        setAnchorEl(event.currentTarget);
+    };
+
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
+
     return (
         <Box className={"hover-line"}>
             <IconButton
                 aria-label="cart"
-                id='basic-button'
+                id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
@@ -44,7 +51,7 @@ export default function Basket() {
                             width: 32,
                             height: 32,
                             ml: -0.5,
-                            mr: 1
+                            mr: 1,
                         },
                         "&:before": {
                             content: "''",
@@ -56,65 +63,60 @@ export default function Basket() {
                             height: 10,
                             bgcolor: "background.paper",
                             transform: "traanslateY(-50%) rotate(45deg)",
-                            zIndex: 0
-                        }
-                    }
+                            zIndex: 0,
+                        },
+                    },
                 }}
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
                 <Stack className="basket_frame">
                     <Box className="all_check_box">
-                        {false ? <div>Cart is Empty!</div> : <div>My Cart Products</div>}
+                        {cartItems.length === 0 ? (
+                            <div>Cart is Empty!</div>
+                        ) : (
+                            <div>My Cart Products</div>
+                        )}
                     </Box>
                     <Box className="orders_main_wrapper">
                         <Box className="prders_wrapper">
-                            {
-                                [0].map(() => {
-                                    const image_path = "/others/qovurma.jpeg"
-                                    return (
-                                        <Box className="basket_info_box">
-                                            <div className="cancel_btn">
-                                                <Cancel
-                                                    color={"primary"}
-                                                />
+                            {cartItems.map((product: any, index: number) => {
+                                const image_path = `${serverApi}/${product.image}`;
+                                return (
+                                    <Box key={index} className="basket_info_box">
+                                        <div className="cancel_btn">
+                                            <Cancel color={"primary"} />
+                                        </div>
+                                        <img src={image_path} className="product_img" />
+                                        <span className="product_name">{product.name}</span>
+                                        <p className="product_price">
+                                            {product.price}$ x {product.quantity}
+                                        </p>
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <div className="col-2">
+                                                <button className="remove" onClick={() => {/* Implement logic for remove */ }}>
+                                                    -
+                                                </button>{" "}
+                                                <button className="add" onClick={() => props.onAdd(product)}>
+                                                    +
+                                                </button>
                                             </div>
-                                            <img src={image_path} className="product_img" />
-                                            <span className="product_name">Shashlik</span>
-                                            <p className="product_price">$10 x 2</p>
-                                            <Box
-                                                sx={{ minWidth: 120 }}
-                                            >
-                                                <div className="col-2">
-                                                    <button className="remove">
-                                                        -
-                                                    </button>{" "}
-                                                    <button className="add">+</button>
-                                                </div>
-                                            </Box>
                                         </Box>
-                                    )
-                                })
-                            }
+                                    </Box>
+                                );
+                            })}
                         </Box>
                     </Box>
-                    {
-                        true ? (
-                            <Box className="to_order_box">
-                                <span className="price_text">Jami: 22 (20+2)</span>
-                                <Button
-                                    startIcon={<ShoppingCart />}
-                                    variant="contained"
-                                >
-                                    Buyurtma Qilish
-                                </Button>
-                            </Box>
-                        ) : (
-                            ""
-                        )
-                    }
+                    {cartItems.length > 0 && (
+                        <Box className="to_order_box">
+                            <span className="price_text">Jami: ${totalPrice} ({itemPrice}+{shippingPrice})</span>
+                            <Button startIcon={<ShoppingCart />} variant="contained">
+                                Buyurtma Qilish
+                            </Button>
+                        </Box>
+                    )}
                 </Stack>
             </Menu>
         </Box>
-    )
+    );
 }

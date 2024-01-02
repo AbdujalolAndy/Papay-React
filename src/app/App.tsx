@@ -22,6 +22,9 @@ import MemberApiService from './apiServices/memberApiService';
 import { Definer } from "../lib/Definer";
 import "./apiServices/verify"
 
+import { Product } from "./types/product";
+import { CartItem } from "./types/others";
+
 
 const App = () => {
   //Initializations
@@ -33,6 +36,9 @@ const App = () => {
     open = Boolean(anchor),
     main_path = window.location.pathname;
 
+  const cartJson: any = localStorage.getItem("cart_data");
+  const current_cart: CartItem[] = JSON.parse(cartJson) ?? [];
+  const [cartItems, setCartItems] = useState<CartItem[]>(current_cart)
 
   useEffect(() => {
     const memberDataJson = localStorage.getItem("member_data") ? localStorage.getItem("member_data") : null,
@@ -60,6 +66,29 @@ const App = () => {
         sweetFailureProvider(Definer.general_err1);
       }
     };
+
+  const onAdd = (product: Product) => {
+    const exist: any = cartItems.find((item: CartItem) => item._id === product._id);
+    if (exist) {
+      const cart_updated = cartItems.map((item: CartItem) =>
+        item._id === product._id ? { ...exist, quantity: exist.quantity + 1 } : item
+      );
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    } else {
+      const new_item: CartItem = {
+        _id: product._id,
+        quantity: 1,
+        name: product.product_name,
+        price: product.product_price,
+        image: product.product_images[0],
+      };
+      const cart_updated = [...cartItems, { ...new_item }];
+      setCartItems(cart_updated);
+      localStorage.setItem("cart_data", JSON.stringify(cart_updated));
+    }
+  };
+
   return (
     <Router>
       {main_path == "/" ? (
@@ -85,6 +114,8 @@ const App = () => {
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           verifiedMemberData={verifiedMemberData}
+          cartItems={cartItems}
+          onAdd = {onAdd}
         />
       ) : (
         <NavbarOthers
@@ -102,7 +133,7 @@ const App = () => {
 
       <Switch>
         <Route path='/restaurant'>
-          <RestaurantPage />
+          <RestaurantPage onAdd = {onAdd}/>
         </Route>
         <Route path='/community'>
           <CommunityPage />

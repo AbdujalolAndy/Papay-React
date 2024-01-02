@@ -6,16 +6,16 @@ import { OneRestaurant } from "./oneRestaurant";
 import { AllRestaurants } from "./allRestaurants";
 import "../../../css/restaurant.css"
 
-export function RestaurantPage() {
+export function RestaurantPage(props:any){
     const restaurant = useRouteMatch();
     return (
         <div className="restaurant_page">
             <Switch>
                 <Route path={`${restaurant.path}/dish/:dish_id`}>
-                    <ChosenDish />
+                    <ChosenDish  onAdd = {props.onAdd} />
                 </Route>
-                <Route path={`${restaurant.path}/:restaurant_id`}>
-                    <OneRestaurant />
+                <Route path={`${restaurant.path}/:restaurant_id`}  >
+                    <OneRestaurant onAdd = {props.onAdd}/>
                 </Route>
                 <Route path={`${restaurant.path}`}>
                     <AllRestaurants />
