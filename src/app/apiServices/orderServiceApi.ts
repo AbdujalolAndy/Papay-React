@@ -17,10 +17,13 @@ class OrderServiceApi {
             console.log("CreateOrder state::", result.data.state);
             assert.ok(result?.data, Definer.general_err1)
             assert.ok(result?.data?.state != "fail", result?.data?.message)
-            const cartItem: CartItem = result.data.data;
-            return cartItem
+            const order: any = result.data.data;
+            console.log("order::", order)
+            return true
         } catch (err: any) {
             console.log(`ERROR::: createOrder ${err.message}`)
         }
     }
 }
+
+export default OrderServiceApi;

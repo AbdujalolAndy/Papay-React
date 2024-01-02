@@ -108,7 +108,10 @@ const App = () => {
     setCartItems(cart_updated);
     localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   }
-  
+  const onDeleteAll = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart_data")
+  }
 
   return (
     <Router>
@@ -127,6 +130,7 @@ const App = () => {
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       ) : main_path.includes('/restaurant') ? (
         <NavbarRestaurant
@@ -143,6 +147,7 @@ const App = () => {
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       ) : (
         <NavbarOthers
@@ -159,6 +164,7 @@ const App = () => {
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
         />
       )}
 

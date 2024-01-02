@@ -7,9 +7,12 @@ import { CartItem } from "../../types/others";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
+import OrderServiceApi from "../../apiServices/orderServiceApi";
+import { useHistory } from "react-router";
 
 export default function Basket(props: any) {
     // Initializations
+    const history = useHistory()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const { cartItems } = props;
@@ -27,7 +30,11 @@ export default function Basket(props: any) {
     const processOrderHandler = async () => {
         try {
             assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
-
+            const orderService = new OrderServiceApi();
+            await orderService.createOrder(cartItems);
+            props.onDeleteAll()
+            handleClose()
+            history.push("/orders");
         } catch (err: any) {
             console.log(err.message);
             sweetErrorHandling(err).then()
@@ -43,7 +50,7 @@ export default function Basket(props: any) {
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
             >
-                <Badge badgeContent={1} color="secondary">
+                <Badge badgeContent={cartItems.length} color="secondary">
                     <img src="icons/shopping_cart.svg" alt="" />
                 </Badge>
             </IconButton>
@@ -121,7 +128,7 @@ export default function Basket(props: any) {
                     {cartItems.length > 0 && (
                         <Box className="to_order_box">
                             <span className="price_text">Jami: ${totalPrice} ({itemPrice}+{shippingPrice})</span>
-                            <Button startIcon={<ShoppingCart />} variant="contained">
+                            <Button onClick={processOrderHandler} startIcon={<ShoppingCart />} variant="contained">
                                 Buyurtma Qilish
                             </Button>
                         </Box>
