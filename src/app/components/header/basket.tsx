@@ -4,6 +4,9 @@ import { Badge, Box, Button, IconButton, Menu, Stack } from "@mui/material";
 import { useState } from "react";
 import { serverApi } from "../../../lib/config";
 import { CartItem } from "../../types/others";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
 
 export default function Basket(props: any) {
     // Initializations
@@ -21,7 +24,15 @@ export default function Basket(props: any) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const processOrderHandler = async () => {
+        try {
+            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
 
+        } catch (err: any) {
+            console.log(err.message);
+            sweetErrorHandling(err).then()
+        }
+    }
     return (
         <Box className={"hover-line"}>
             <IconButton
@@ -85,7 +96,7 @@ export default function Basket(props: any) {
                                 return (
                                     <Box key={index} className="basket_info_box">
                                         <div className="cancel_btn">
-                                            <Cancel color={"primary"} onClick={()=>props.onDelete(product)} />
+                                            <Cancel color={"primary"} onClick={() => props.onDelete(product)} />
                                         </div>
                                         <img src={image_path} className="product_img" />
                                         <span className="product_name">{product.name}</span>

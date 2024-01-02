@@ -16,8 +16,9 @@ class ProductApiService {
         try {
             const url = `${this.path}/products`,
                 result = await axios.post(url, data, { withCredentials: true });
-            console.log("state", result.data.state)
+            console.log("GetTargetProducts state::", result.data.state);
             assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
             const products: Product[] = result.data.data;
             return products;
         } catch (err: any) {
@@ -29,9 +30,11 @@ class ProductApiService {
     async getChosenProduct(product_id: string): Promise<Product> {
         try {
             const url = `${serverApi}/products/${product_id}`,
-                product_result = await axios.get(url, { withCredentials: true });
-            const chosenProduct: Product = product_result.data.data
-                console.log("chosenProduct::", url)
+                result = await axios.get(url, { withCredentials: true });
+            console.log("GetChosenProduct state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
+            const chosenProduct: Product = result.data.data
             return chosenProduct;
         } catch (err: any) {
             console.log(`ERROR::: ${err.message}`)

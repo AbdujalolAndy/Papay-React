@@ -15,8 +15,9 @@ class RestaurantApiService {
         try {
             const url: string = "/restaurants?order=top&page=1&limit=4",
                 result = await axios.get(this.path + url, { withCredentials: true })
-            assert.ok(result, Definer.general_err1);
-            console.log("result of getTopRestaurants::", result.data)
+            console.log("GetTopRestaurants state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
             const top_restaurants: Restaurant[] = result.data.data;
             return top_restaurants
         } catch (err: any) {
@@ -28,7 +29,9 @@ class RestaurantApiService {
         try {
             const url: string = `/restaurants?order=${data.order}&page=${data.page}&limit=${data.limit}`,
                 result = await axios.get(this.path + url, { withCredentials: true })
-            assert.ok(result, Definer.general_err1);
+            console.log("GetRestaurants state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
             const top_restaurants: Restaurant[] = result.data.data;
             return top_restaurants
         } catch (err: any) {
@@ -41,7 +44,9 @@ class RestaurantApiService {
         try {
             const url = `${serverApi}/restaurants/${id}`,
                 result = await axios.get(url, { withCredentials: true })
-            assert.ok(result?.data, Definer.general_err1);
+            console.log("chosenRestaurant state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
             const chosenResturant: Restaurant = result.data.data;
             return chosenResturant
         } catch (err: any) {

@@ -2,8 +2,7 @@ import axios from "axios";
 import { serverApi } from "../../lib/config"
 import assert from "assert"
 import { Definer } from "../../lib/Definer";
-import { Member, Restaurant } from "../types/user";
-import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../lib/sweetAlert";
+import { Member, } from "../types/user";
 import { MemberLiken } from "../types/others";
 
 class MemberApiService {
@@ -16,8 +15,9 @@ class MemberApiService {
         try {
             const url = `${this.path}/login`,
                 result = await axios.post(url, data, { withCredentials: true });
-            assert.ok(result?.data?.state != "fail", result?.data?.message);
-
+            console.log("state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
             const member: Member = result.data.data;
             localStorage.setItem("member_data", JSON.stringify(member));
             return member
@@ -31,7 +31,8 @@ class MemberApiService {
         try {
             const url = `${this.path}/signup`,
                 result = await axios.post(url, signUpData, { withCredentials: true })
-            assert.ok(result?.data, Definer.general_err1);
+            console.log("SignupRequest state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
             assert.ok(result?.data?.state != "fail", result?.data?.message)
             const new_member: Member = result.data.data;
             localStorage.setItem("member_data", JSON.stringify(new_member))
@@ -45,8 +46,9 @@ class MemberApiService {
         try {
             const url = `${this.path}/logout`;
             const result = await axios.get(url, { withCredentials: true });
-            assert.ok(result?.data, Definer.general_err1);
-            assert.ok(result?.data?.state !== "fail", result?.data?.message);
+            console.log("LogoutRequest state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
             const logout_result = result.data.state
             return logout_result === "success"
         } catch (err: any) {
@@ -57,10 +59,10 @@ class MemberApiService {
     async memberLikeTarget(data: any) {
         try {
             const result = await axios.post(this.path + "/member-liken", data, { withCredentials: true })
-            assert.ok(result?.data, Definer.general_err1);
-            assert.ok(result?.data?.state != "fail", result.data.message);
-            console.log("Like_result:::", result)
-            const result_like:MemberLiken = result.data.data;
+            console.log("MemberLikeTarget state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
+            const result_like: MemberLiken = result.data.data;
             return result_like
         } catch (err: any) {
             console.log(`ERROR::: memberLikeTarget ${err.message}`);

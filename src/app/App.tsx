@@ -108,6 +108,7 @@ const App = () => {
     setCartItems(cart_updated);
     localStorage.setItem("cart_data", JSON.stringify(cart_updated));
   }
+  
 
   return (
     <Router>
