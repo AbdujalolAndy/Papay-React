@@ -28,11 +28,12 @@ import { CartItem } from "./types/others";
 
 const App = () => {
   //Initializations
-  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(null),
+  const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(),
     [path, setPath] = useState(),
     [signUpOpen, setSignUpOpen] = useState(false),
     [logInOpen, setLogInOpen] = useState(false),
     [anchor, setAnchor] = useState<null | HTMLElement>(null),
+    [orderRebuild, setOrderRebuild] = useState<Date>(new Date()),
     open = Boolean(anchor),
     main_path = window.location.pathname;
 
@@ -87,8 +88,7 @@ const App = () => {
       setCartItems(cart_updated);
       localStorage.setItem("cart_data", JSON.stringify(cart_updated));
     }
-  };
-
+  }
   const onRemove = (data: CartItem) => {
     const item_data: any = cartItems.find((ele: CartItem) => ele._id === data._id);
     if (item_data.quantity === 1) {
@@ -117,6 +117,7 @@ const App = () => {
     <Router>
       {main_path == "/" ? (
         <NavbarHome
+          //
           setPath={setPath}
           open={open}
           anchor={anchor}
@@ -125,15 +126,19 @@ const App = () => {
           handleLogOutClick={handleLogOutClick}
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
+          //
           verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
+          //
+          setOrderRebuild={setOrderRebuild}
         />
       ) : main_path.includes('/restaurant') ? (
         <NavbarRestaurant
+          //
           setPath={setPath}
           open={open}
           anchor={anchor}
@@ -142,15 +147,19 @@ const App = () => {
           handleLogOutClick={handleLogOutClick}
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
+          //
           verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
+          //
+          setOrderRebuild={setOrderRebuild}
         />
       ) : (
         <NavbarOthers
+          //
           setPath={setPath}
           open={open}
           anchor={anchor}
@@ -159,12 +168,15 @@ const App = () => {
           handleLogOutClick={handleLogOutClick}
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
+          //
           verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
           onDelete={onDelete}
           onDeleteAll={onDeleteAll}
+          //
+          setOrderRebuild={setOrderRebuild}
         />
       )}
 
@@ -176,7 +188,7 @@ const App = () => {
           <CommunityPage />
         </Route>
         <Route path='/orders'>
-          <OrdersPage />
+          <OrdersPage setOrderRebuild={setOrderRebuild} orderRebuild={orderRebuild} verifiedMemberData={verifiedMemberData} />
         </Route>
         <Route path='/member-page'>
           <MemberPage />

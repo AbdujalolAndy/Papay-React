@@ -1,41 +1,69 @@
 import { TabPanel } from "@mui/lab"
 import { Box, Button, Stack } from "@mui/material"
-import {createSelector} from "reselect"
+import { createSelector } from "reselect"
 import { retrieveProcessOrders } from "../../screens/OrdersPage/selector"
 import { useSelector } from "react-redux"
+import { Product } from "../../types/product"
+import { serverApi } from "../../../lib/config"
+import assert from "assert"
+import OrderServiceApi from "../../apiServices/orderServiceApi"
+import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert"
+import { Definer } from "../../../lib/Definer"
 
-const finishedOrders = [
-    [1, 2, 3, 4],
-    [1, 2],
-]
 //Redux Selector
 const processOrdersRetriever = createSelector(
     retrieveProcessOrders,
-    (processOrders)=>({processOrders})
+    (processOrders) => ({ processOrders })
 )
 export default function ProcessOrders(props: any) {
     //Initilizations
-    const {processOrders} = useSelector(processOrdersRetriever)
+    const { processOrders } = useSelector(processOrdersRetriever)
+    const { setOrderRebuild } = props
+    //Handlers
+    const finishedOrderHandler = async (event: any) => {
+        try {
+            const order_id = event.target.value;
+            if (!localStorage.getItem("member_data")) {
+                await sweetFailureProvider("Please, login first!", true)
+            }
+            let confirmation = window.confirm("Buyurtmani olganingizni tasdiqlaysizmi?");
+            if (confirmation) {
+                const orderService = new OrderServiceApi();
+                await orderService.updateOrderStatus({ order_id: order_id, order_status: "Finished" })
+                setOrderRebuild(new Date())
+            }
+        } catch (err) {
+            sweetErrorHandling(err).then()
+        }
+    }
     return (
         <TabPanel value={"2"}>
             <Stack>
                 {
-                    finishedOrders?.map((order) => {
+                    processOrders?.map((order) => {
+                        const date = new Date(order.createdAt),
+                            yyyy = date.getFullYear(),
+                            mm = String(date.getMonth() + 1).padStart(2, '0'),
+                            dd = String(date.getDate()).padStart(2, '0'),
+                            HH = String(date.getHours()).padStart(2, '0'),
+                            mmPart = String(date.getMinutes()).padStart(2, '0'),
+                            formattedDateTime = `${yyyy}-${mm}-${dd} ${HH}:${mmPart}`;
                         return (
                             <Box className="order_main_box">
                                 <Box className="order_box_scroll">
-                                    {order.map((item) => {
-                                        const image_path = "/others/qovurma.jpeg"
+                                    {order.order_items.map((item) => {
+                                        const product: Product = order.product_data.filter((ele) => ele._id === item.product_id)[0];
+                                        const image_path = `${serverApi}/${product.product_images[0]}`
                                         return (
                                             <Box className="ordersName_price">
                                                 <img src={image_path} className={"orderDishImg"} />
-                                                <p className="titleDish">Qovurma</p>
+                                                <p className="titleDish">{product.product_name}</p>
                                                 <Box className="priceBox">
-                                                    <p>$11</p>
+                                                    <p>${item.item_price}</p>
                                                     <img src="/icons/Close.svg" />
-                                                    <p>2</p>
+                                                    <p>{item.item_quantity}</p>
                                                     <img src="/icons/pause.svg" />
-                                                    <p style={{ marginLeft: "15px" }}>$22</p>
+                                                    <p style={{ marginLeft: "15px" }}>${item.item_price * item.item_quantity}</p>
                                                 </Box>
                                             </Box>
                                         )
@@ -44,16 +72,21 @@ export default function ProcessOrders(props: any) {
                                 <Box className="total_price_box blue_solid">
                                     <Box className="boxTotal">
                                         <p>mahsulot narxi</p>
-                                        <p>$11</p>
+                                        <p>${order.order_total_amount - order.order_delivery_cost}</p>
                                         <img src="/icons/plus.svg" style={{ marginLeft: "20px" }} />
                                         <p>Yetkazish hizmati</p>
-                                        <p>$2</p>
+                                        <p>${order.order_delivery_cost}</p>
                                         <img src="/icons/pause.svg" style={{ marginLeft: "20px" }} />
-                                        <p>jami narxi</p>
-                                        <p>$13</p>
+                                        <p>Jami narxi</p>
+                                        <p>${order.order_total_amount}</p>
                                     </Box>
-                                    <p className="data_compl">23-11-20 14:07</p>
-                                    <Button variant="contained" sx={{ background: "rgb(2, 136, 209)", color: "rgb(255, 255, 255)", borderRadius: "10px" }} >Yakunlash</Button>
+                                    <p className="data_compl">{formattedDateTime}</p>
+                                    <Button
+                                        variant="contained"
+                                        sx={{ background: "rgb(2, 136, 209)", color: "rgb(255, 255, 255)", borderRadius: "10px" }}
+                                        value={order._id}
+                                        onClick={finishedOrderHandler}
+                                    >Yakunlash</Button>
                                 </Box>
                             </Box>
                         )

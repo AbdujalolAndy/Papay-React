@@ -15,7 +15,7 @@ export default function Basket(props: any) {
     const history = useHistory()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const { cartItems } = props;
+    const { cartItems, setOrderRebuild } = props;
     const itemPrice = cartItems.reduce((a: any, c: CartItem) => a + c.price * c.quantity, 0)
     const shippingPrice = itemPrice > 100 ? 0 : 2
     const totalPrice = itemPrice + shippingPrice
@@ -32,8 +32,11 @@ export default function Basket(props: any) {
             assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
             const orderService = new OrderServiceApi();
             await orderService.createOrder(cartItems);
+
             props.onDeleteAll()
             handleClose()
+            
+            setOrderRebuild(new Date)
             history.push("/orders");
         } catch (err: any) {
             console.log(err.message);
@@ -51,7 +54,7 @@ export default function Basket(props: any) {
                 onClick={handleClick}
             >
                 <Badge badgeContent={cartItems.length} color="secondary">
-                    <img src="icons/shopping_cart.svg" alt="" />
+                    <img src="/icons/shopping_cart.svg" alt="" />
                 </Badge>
             </IconButton>
             <Menu
@@ -97,7 +100,7 @@ export default function Basket(props: any) {
                         )}
                     </Box>
                     <Box className="orders_main_wrapper">
-                        <Box className="prders_wrapper">
+                        <Box className="orders_wrapper">
                             {cartItems.map((product: any, index: number) => {
                                 const image_path = `${serverApi}/${product.image}`;
                                 return (

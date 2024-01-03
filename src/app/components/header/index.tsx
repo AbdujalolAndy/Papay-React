@@ -76,6 +76,7 @@ export function NavbarHome(props: any) {
                             onRemove={props.onRemove}
                             onDelete={props.onDelete}
                             onDeleteAll={props.onDeleteAll}
+                            setOrderRebuild={props.setOrderRebuild}
                         />
                         {props.verifiedMemberData ? (
                             <img style={{ width: "48px", height: "48px", borderRadius: "50%" }} src={props.verifiedMemberData.mb_image} alt="user" onClick={props.handleLogOutClick} />
