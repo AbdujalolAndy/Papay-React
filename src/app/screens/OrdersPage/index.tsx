@@ -16,6 +16,8 @@ import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 import { useDispatch } from "react-redux";
 import OrderServiceApi from "../../apiServices/orderServiceApi";
 import { CartItem } from "../../types/others";
+import { Member } from "../../types/user";
+import { serverApi } from "../../../lib/config";
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -27,7 +29,7 @@ export function OrdersPage(props: any) {
     /** Initializations **/
     const [value, setValue] = useState("1");
     const { setFinishedOrders, setPausedOrders, setProcessOrders } = actionDispatch(useDispatch())
-    const { orderRebuild, setOrderRebuild } = props
+    const { orderRebuild, setOrderRebuild, verifiedMemberData } = props
 
     useEffect(() => {
         const orderService = new OrderServiceApi()
@@ -76,19 +78,19 @@ export function OrdersPage(props: any) {
                     <Box className="order_info_box">
                         <Box display='flex' marginBottom={"40px"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
                             <Box className="order_user_img">
-                                <img src="/auth/default_user.svg" className="order_user_avatar" />
+                                <img src={verifiedMemberData?.mb_image ?? "/auth/default_user.svg"} className="order_user_avatar" />
                                 <Box className="order_user_icon_box">
                                     <img src="/icons/user_icon.svg" className="order_user_prof_img" />
                                 </Box>
                             </Box>
-                            <span className="order_user_name">Andy</span>
-                            <span className="order_user_prof">User</span>
+                            <span className="order_user_name">{verifiedMemberData?.mb_nick}</span>
+                            <span className="order_user_prof">{verifiedMemberData?.mb_type ?? "Foydalanuvchi"}</span>
                         </Box>
                         <Marginer direction="horizontal" width="100%" height="1" bg="rgb(161, 161, 161)" />
                         <Box className="order_user_address" marginTop={"8px"}>
                             <Box style={{ display: "flex" }}>
                                 <LocationOnIcon />
-                                <div className="spec_address_txt">Manzil kiritilmagan</div>
+                                <div className="spec_address_txt">{verifiedMemberData?.mb_address ?? "Manzil kiritilmagan"}</div>
                             </Box>
                         </Box>
                     </Box>
