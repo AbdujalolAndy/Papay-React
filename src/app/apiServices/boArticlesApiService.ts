@@ -26,7 +26,18 @@ class BoArticlesApiService {
         catch (err: any) {
             throw err
         }
-
+    }
+    async boArticlesLikeTarget(data: any): Promise<any> {
+        try {
+            const url = `${this.path}/member-liken`,
+                result = await axios.post(url, data, { withCredentials: true });
+            console.log("state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1)
+            assert.ok(result?.data?.state != "fail", result?.data?.message)
+            return result
+        } catch (err: any) {
+            throw err
+        }
     }
 }
 

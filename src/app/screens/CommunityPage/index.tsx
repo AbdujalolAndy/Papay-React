@@ -38,11 +38,13 @@ export function CommunityPage() {
     const [searchBoArticle, setSearchBoArticle] = useState<SearchBoArticle>({ bo_id: "all", limit: 4, page: 1, order: "createdAt" })
     const { setTargetBoArticles } = actionDispatch(useDispatch());
     const { targetBoArticles } = useSelector(retrieverTargetBoArticles)
+    const [rebuild, setRebuild] = useState<Date>(new Date())
+
     //Backend data
     useEffect(() => {
         const bo_articles = new BoArticlesApiService()
         bo_articles.getBoArticles(searchBoArticle).then(data => setTargetBoArticles(data))
-    }, [searchBoArticle])
+    }, [searchBoArticle, rebuild])
 
     //Handlers
     const handleValue = (event: any, newValue: string) => {
@@ -95,16 +97,16 @@ export function CommunityPage() {
                                 </Box>
                                 <Box className="article_main" overflow={"hidden"}>
                                     <TabPanel value="1" >
-                                        <TargetArticles targetBoArticles={targetBoArticles} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild} />
                                     </TabPanel>
                                     <TabPanel value="2">
-                                        <TargetArticles targetBoArticles={targetBoArticles} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild}/>
                                     </TabPanel>
                                     <TabPanel value="3">
-                                        <TargetArticles targetBoArticles={targetBoArticles} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild}/>
                                     </TabPanel>
                                     <TabPanel value="4">
-                                        <TargetArticles targetBoArticles={targetBoArticles} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild}/>
                                     </TabPanel>
                                 </Box>
                                 <Box className="article_bott">

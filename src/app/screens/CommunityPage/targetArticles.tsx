@@ -3,9 +3,27 @@ import { Box, Checkbox, Link, Stack } from "@mui/material";
 import { BoArticle } from "../../types/boArticle";
 import { serverApi } from "../../../lib/config";
 import moment from "moment";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
+import BoArticlesApiService from "../../apiServices/boArticlesApiService";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 
 
 export default function TargetArticles(props: any) {
+
+    //Handlers
+    const targetLikeArticle = async (event: any) => {
+        try {
+            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            const boArticleServiceApi = new BoArticlesApiService(),
+                like_result = await boArticleServiceApi.boArticlesLikeTarget({ like_ref_id: event.target.value, group_type: 'community' })
+            assert.ok(like_result, Definer.general_err1);
+            await sweetTopSmallSuccessAlert("success", 700, false);
+            props.setRebuild(new Date())
+        } catch (err: any) {
+            sweetErrorHandling(err).then()
+        }
+    }
     return (
         <Stack>
             {props.targetBoArticles?.map((article: BoArticle) => {
@@ -48,9 +66,11 @@ export default function TargetArticles(props: any) {
                                     >
                                         <span style={{ marginRight: "40px" }}>{moment(article.createdAt).format("YYYY-MM-DD")}</span>
                                         <Checkbox
+                                            value={article._id}
                                             icon={<FavoriteBorder />}
                                             checkedIcon={<Favorite style={{ fill: "red" }} />}
-                                            checked={article.me_liked && article.me_liked[0]?.my_favorite? true : false}
+                                            checked={article.me_liked && article.me_liked[0]?.my_favorite ? true : false}
+                                            onClick={targetLikeArticle}
 
                                         />
                                         <span style={{ marginRight: "18px" }}>{article.art_likes}</span>
