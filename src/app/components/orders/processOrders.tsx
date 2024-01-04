@@ -6,9 +6,10 @@ import { useSelector } from "react-redux"
 import { Product } from "../../types/product"
 import { serverApi } from "../../../lib/config"
 import assert from "assert"
-import OrderServiceApi from "../../apiServices/orderServiceApi"
+import OrderServiceApi from "../../apiServices/orderApiService"
 import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert"
 import { Definer } from "../../../lib/Definer"
+import moment from "moment"
 
 //Redux Selector
 const processOrdersRetriever = createSelector(
@@ -41,13 +42,6 @@ export default function ProcessOrders(props: any) {
             <Stack>
                 {
                     processOrders?.map((order) => {
-                        const date = new Date(order.createdAt),
-                            yyyy = date.getFullYear(),
-                            mm = String(date.getMonth() + 1).padStart(2, '0'),
-                            dd = String(date.getDate()).padStart(2, '0'),
-                            HH = String(date.getHours()).padStart(2, '0'),
-                            mmPart = String(date.getMinutes()).padStart(2, '0'),
-                            formattedDateTime = `${yyyy}-${mm}-${dd} ${HH}:${mmPart}`;
                         return (
                             <Box className="order_main_box">
                                 <Box className="order_box_scroll">
@@ -80,7 +74,7 @@ export default function ProcessOrders(props: any) {
                                         <p>Jami narxi</p>
                                         <p>${order.order_total_amount}</p>
                                     </Box>
-                                    <p className="data_compl">{formattedDateTime}</p>
+                                    <p className="data_compl">{moment(order.createdAt).format("YYYY-MM-DD")}</p>
                                     <Button
                                         variant="contained"
                                         sx={{ background: "rgb(2, 136, 209)", color: "rgb(255, 255, 255)", borderRadius: "10px" }}

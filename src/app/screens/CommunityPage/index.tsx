@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Container, PaginationItem, Stack, TablePagination } from "@mui/material"
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import ArrowBack from "@mui/icons-material/ArrowBack";
@@ -7,27 +7,67 @@ import TabContext from '@mui/lab/TabContext';
 import Tab from '@mui/material/Tab';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Swiper from "swiper";
 import { CommunityChats } from "./communityChats";
 import TargetArticles from "./targetArticles";
 import "../../../css/community.css"
+import { BoArticle, SearchBoArticle } from "../../types/boArticle";
+import BoArticlesApiService from "../../apiServices/boArticlesApiService";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { setTargetBoArticles } from "./slice";
+import { targetBoArticlesRetrieve } from "./selector";
+import { createSelector } from "reselect"
 
-const targetBoArticles = [
-    { img: "/community/avatar_ex_1.jpg", name: "Martin", desc: "Shashlikga gap yo'q", date: "2023-09-13", like: 80, views: 104 },
-    { name: "Shawn", desc: "Monti juda hamyon bob ekan", date: "2023-12-13", like: 8, views: 23 },
-    { img: "/community/avatar_ex_2.jpg", name: "Leo", desc: "Rayhon restauranti juda pokiza", date: "2023-06-27", like: 40, views: 120 },
-    { img: "/community/avatar_ex_3.jpg", name: "Andy", desc: "Burakda tekin sharbat bor ekan!", date: "2023-12-01", like: 35, views: 70 },
-]
+//Redux Slice
+const actionDispatch = (dispatch: Dispatch) => ({
+    setTargetBoArticles: (data: BoArticle[]) => dispatch(setTargetBoArticles(data))
+})
+
+//Redux Selector 
+const retrieverTargetBoArticles = createSelector(
+    targetBoArticlesRetrieve,
+    (targetBoArticles) => ({ targetBoArticles })
+)
+
+
 
 export function CommunityPage() {
-    const [value, setValue] = React.useState("1");
-    const [pagination, setPagination] = React.useState(1)
+    //Initializations
+    const [value, setValue] = useState<string>("1");
+    const [pagination, setPagination] = useState<number>(1);
+    const [searchBoArticle, setSearchBoArticle] = useState<SearchBoArticle>({ bo_id: "all", limit: 4, page: 1, order: "createdAt" })
+    const { setTargetBoArticles } = actionDispatch(useDispatch());
+    const { targetBoArticles } = useSelector(retrieverTargetBoArticles)
+    //Backend data
+    useEffect(() => {
+        const bo_articles = new BoArticlesApiService()
+        bo_articles.getBoArticles(searchBoArticle).then(data => setTargetBoArticles(data))
+    }, [searchBoArticle])
+
+    //Handlers
     const handleValue = (event: any, newValue: string) => {
         setValue(newValue)
+        switch (newValue) {
+            case "1":
+                setSearchBoArticle({ ...searchBoArticle, bo_id: "all" })
+                break;
+            case "2":
+                setSearchBoArticle({ ...searchBoArticle, bo_id: "celebrity" })
+                break;
+            case "3":
+                setSearchBoArticle({ ...searchBoArticle, bo_id: "evaluation" })
+                break
+            case "4":
+                setSearchBoArticle({ ...searchBoArticle, bo_id: "story" })
+                break
+        }
     }
     const handlePginationChange = ((event: any, newValue: number) => {
-        setPagination(newValue)
-    })
+        setPagination(newValue);
+        searchBoArticle.page = newValue
+        setSearchBoArticle({ ...searchBoArticle })
+    });
+
     return (
         <div className="community_page">
             <div className="community_frame">
@@ -54,17 +94,17 @@ export function CommunityPage() {
                                     </Box>
                                 </Box>
                                 <Box className="article_main" overflow={"hidden"}>
-                                    <TabPanel value="1">
+                                    <TabPanel value="1" >
                                         <TargetArticles targetBoArticles={targetBoArticles} />
                                     </TabPanel>
                                     <TabPanel value="2">
-                                        <TargetArticles targetBoArticles={targetBoArticles.slice(0, 2).reverse()} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} />
                                     </TabPanel>
                                     <TabPanel value="3">
-                                        <TargetArticles targetBoArticles={targetBoArticles.concat(targetBoArticles.slice(0, 2).reverse())} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} />
                                     </TabPanel>
                                     <TabPanel value="4">
-                                        <TargetArticles targetBoArticles={targetBoArticles.reverse()} />
+                                        <TargetArticles targetBoArticles={targetBoArticles} />
                                     </TabPanel>
                                 </Box>
                                 <Box className="article_bott">

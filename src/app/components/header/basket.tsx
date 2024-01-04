@@ -7,7 +7,7 @@ import { CartItem } from "../../types/others";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
-import OrderServiceApi from "../../apiServices/orderServiceApi";
+import OrderServiceApi from "../../apiServices/orderApiService";
 import { useHistory } from "react-router";
 
 export default function Basket(props: any) {

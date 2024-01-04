@@ -14,7 +14,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { Order } from "../../types/order";
 import { setFinishedOrders, setPausedOrders, setProcessOrders } from "./slice";
 import { useDispatch } from "react-redux";
-import OrderServiceApi from "../../apiServices/orderServiceApi";
+import OrderServiceApi from "../../apiServices/orderApiService";
 import { CartItem } from "../../types/others";
 import { Member } from "../../types/user";
 import { serverApi } from "../../../lib/config";

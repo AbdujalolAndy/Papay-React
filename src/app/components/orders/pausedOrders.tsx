@@ -10,7 +10,7 @@ import { Product } from "../../types/product"
 import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert"
 import assert from "assert"
 import { Definer } from "../../../lib/Definer"
-import OrderServiceApi from "../../apiServices/orderServiceApi"
+import OrderServiceApi from "../../apiServices/orderApiService"
 
 //Redux Selector 
 const pausedOrdersRetriever = createSelector(
