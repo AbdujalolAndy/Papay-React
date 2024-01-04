@@ -7,7 +7,8 @@ import { Restaurant } from "./user";
 export interface AppRootState {
     homePage: HomePageState;
     restaurantPage: RestaurantPageState;
-    orderPage: OrderPageState
+    orderPage: OrderPageState,
+    communityPage: CommunityPageState
 
 }
 
@@ -34,4 +35,10 @@ export interface OrderPageState {
     pausedOrders: Order[];
     processOrders: Order[];
     finishedOrders: Order[];
+}
+
+//Community Page
+
+export interface CommunityPageState {
+    targetBoArticles: BoArticle[]
 }
