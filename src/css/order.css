@@ -308,17 +308,17 @@
     align-items: center;
     justify-content: center;
     text-transform: capitalize;
+    justify-content: center;
 }
 
 
 .order_page .total_price_box .boxTotal p {
-    margin-left: 20px;
-    font-family: "Commissioner";
-    font-style: normal;
-    font-weight: 600;
+    color: #000;
+    font-family: Commissioner;
     font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
     line-height: 36px;
-    color: #000000;
 }
 
 .order_page .total_price_box .boxTotal .data_compl {
