@@ -4,13 +4,15 @@ import reduxLogger from "redux-logger"
 import restaurantPageReducer from './screens/RestaurantPage/slice';
 import orderPageReducer from './screens/OrdersPage/slice';
 import communityPageReducer from './screens/CommunityPage/slice';
+import memberPageReducer from './screens/MemberPage/slice';
 export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(reduxLogger),
   reducer: {
     homePage: homePageReducer,
     restaurantPage: restaurantPageReducer,
     orderPage: orderPageReducer,
-    communityPage: communityPageReducer
+    communityPage: communityPageReducer,
+    memberPage: memberPageReducer,
   },
 });
 

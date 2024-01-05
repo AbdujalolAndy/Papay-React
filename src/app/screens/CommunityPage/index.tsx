@@ -112,7 +112,7 @@ export function CommunityPage() {
                                 <Box className="article_bott">
                                     <Pagination
                                         page={pagination}
-                                        count={5}
+                                        count={searchBoArticle.page >= 3 ? searchBoArticle.page + 1 : 3}
                                         renderItem={(item) => (
                                             <PaginationItem
                                                 components={{
