@@ -12,16 +12,54 @@ import { MemberFollowing } from "./memberFollowing";
 import { MySettings } from "./mySettings";
 import { TuiEditor } from "../../components/tuiEditor/tuiEditor";
 import { TViewer } from "../../components/tuiEditor/tviewer";
+import { Dispatch } from "@reduxjs/toolkit";
 
-export function VisitMyPage() {
+//Redux Imports
+import { setChosenMember, setChosenMemberBoArticles, setChosenSingleBoArticle } from "./slice";
+import { Member } from "../../types/user";
+import { BoArticle } from "../../types/boArticle";
+import { createSelector } from "reselect"
+import { retrieveChosenMember, retrieveChosenMemberBoArticles, retrieveChosenSingleBoArticle } from "./selector";
+import { useDispatch, useSelector } from "react-redux";
 
+
+//Redux Slice
+const actionDsipatch = (dispatch: Dispatch) => ({
+    setChosenMember: (data: Member) => dispatch(setChosenMember(data)),
+    setChosenMemberBoArticles: (data: BoArticle[]) => dispatch(setChosenMemberBoArticles(data)),
+    setChosenSingleBoArticle: (data: BoArticle) => dispatch(setChosenSingleBoArticle(data))
+})
+
+//Redux Selector
+const chosenMemberRetriever = createSelector(
+    retrieveChosenMember,
+    (chosenMember) => ({ chosenMember })
+)
+const chosenMemberBoArticlesRetriever = createSelector(
+    retrieveChosenMemberBoArticles,
+    (chosenMemberBoArticles) => ({ chosenMemberBoArticles })
+)
+const chosenSingleBoArticleRetriever = createSelector(
+    retrieveChosenSingleBoArticle,
+    (chosenSingleBoArticle) => ({ chosenSingleBoArticle })
+)
+
+export function VisitMyPage(props: any) {
     // Initialize
-    const [value, setValue] = React.useState("1");
+    const [value, setValue] = React.useState("1"),
+        {
+            setChosenMember,
+            setChosenMemberBoArticles,
+            setChosenSingleBoArticle
+        } = actionDsipatch(useDispatch()),
 
-    // Handle Change
-    const handleChange = (event: any, newValue: string) => {
-        setValue(newValue)
-    }
+        { chosenMember } = useSelector(chosenMemberRetriever),
+        { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever),
+        { verifiedMemberData } = props,
+        // Handle Change
+        handleChange = (event: any, newValue: string) => {
+            setValue(newValue)
+        }
     return (
         <div className="my_page">
             <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>

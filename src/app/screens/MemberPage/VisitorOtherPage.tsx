@@ -8,16 +8,54 @@ import { Facebook, Instagram, Telegram, YouTube } from "@mui/icons-material";
 import { MemberPosts } from "./memberPosts";
 import { MemberFollowers } from "./memberFollowers";
 import { MemberFollowing } from "./memberFollowing";
+//Redux Imports
+import { setChosenMember, setChosenMemberBoArticles, setChosenSingleBoArticle } from "./slice";
+import { Member } from "../../types/user";
+import { BoArticle } from "../../types/boArticle";
+import { createSelector } from "reselect"
+import { retrieveChosenMember, retrieveChosenMemberBoArticles, retrieveChosenSingleBoArticle } from "./selector";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
 
-export function VisitorOtherPage() {
 
+//Redux Slice
+const actionDsipatch = (dispatch: Dispatch) => ({
+    setChosenMember: (data: Member) => dispatch(setChosenMember(data)),
+    setChosenMemberBoArticles: (data: BoArticle[]) => dispatch(setChosenMemberBoArticles(data)),
+    setChosenSingleBoArticle: (data: BoArticle) => dispatch(setChosenSingleBoArticle(data))
+})
+
+//Redux Selector
+const chosenMemberRetriever = createSelector(
+    retrieveChosenMember,
+    (chosenMember) => ({ chosenMember })
+)
+const chosenMemberBoArticlesRetriever = createSelector(
+    retrieveChosenMemberBoArticles,
+    (chosenMemberBoArticles) => ({ chosenMemberBoArticles })
+)
+const chosenSingleBoArticleRetriever = createSelector(
+    retrieveChosenSingleBoArticle,
+    (chosenSingleBoArticle) => ({ chosenSingleBoArticle })
+)
+
+export function VisitorOtherPage(props: any) {
     // Initialize
-    const [value, setValue] = React.useState("1");
+    const [value, setValue] = React.useState("1"),
+        {
+            setChosenMember,
+            setChosenMemberBoArticles,
+            setChosenSingleBoArticle
+        } = actionDsipatch(useDispatch()),
+        { chosenMember } = useSelector(chosenMemberRetriever),
+        { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever),
+        { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever),
+        { verifiedMemberData } = props,
 
-    // Handle Change
-    const handleChange = (event: any, newValue: string) => {
-        setValue(newValue)
-    }
+        // Handle Change
+        handleChange = (event: any, newValue: string) => {
+            setValue(newValue)
+        }
     return (
         <div className="my_page">
             <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
@@ -35,14 +73,14 @@ export function VisitorOtherPage() {
                                 <TabPanel value={"2"}>
                                     <Box className="menu_name">Followers</Box>
                                     <Box className="menu_content">
-                                        <MemberFollowers action_enabled={false}/>
+                                        <MemberFollowers action_enabled={false} />
                                     </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"3"}>
                                     <Box className="menu_name">Following</Box>
                                     <Box className="menu_content">
-                                        <MemberFollowing action_enabled={false}/>
+                                        <MemberFollowing action_enabled={false} />
                                     </Box>
                                 </TabPanel>
 
@@ -96,7 +134,7 @@ export function VisitorOtherPage() {
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
-                                                    >
+                                                >
                                                     BEKOR QILISH
                                                 </Button>
                                             )}

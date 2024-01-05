@@ -5,17 +5,19 @@ import { VisitorOtherPage } from "./VisitorOtherPage"
 import { VisitMyPage } from "./VisitMyPage"
 import "../../../css/my_page.css"
 
-export function MemberPage() {
+
+
+export function MemberPage(props:any) {
     const member = useRouteMatch()
-    console.log(member)
+    const {verifiedMemberData} = props
     return (
         <div className="member_page">
             <Switch>
                 <Route path={`${member.path}/other`}>
-                    <VisitorOtherPage />
+                    <VisitorOtherPage verifiedMemberData={verifiedMemberData}/>
                 </Route>
                 <Route path={`${member.path}/`}>
-                    <VisitMyPage />
+                    <VisitMyPage verifiedMemberData={verifiedMemberData}/>
                 </Route>
             </Switch>
         </div>

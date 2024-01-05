@@ -16,7 +16,7 @@ const memberPageSlice = createSlice({
         setChosenMember: (state, action) => {
             state.chosenMember = action.payload
         },
-        setCchosenMemberBoArticles: (state, action) => {
+        setChosenMemberBoArticles: (state, action) => {
             state.chosenMemberBoArticles = action.payload
         },
         setChosenSingleBoArticle: (state, action) => {
@@ -34,7 +34,7 @@ const memberPageSlice = createSlice({
 
 export const {
     setChosenMember,
-    setCchosenMemberBoArticles,
+    setChosenMemberBoArticles,
     setChosenSingleBoArticle,
     setMemberFollowers,
     setMemberFollowing

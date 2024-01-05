@@ -191,7 +191,7 @@ const App = () => {
           <OrdersPage setOrderRebuild={setOrderRebuild} orderRebuild={orderRebuild} verifiedMemberData={verifiedMemberData} />
         </Route>
         <Route path='/member-page'>
-          <MemberPage />
+          <MemberPage verifiedMemberData = {verifiedMemberData}/>
         </Route>
         <Route path='/help'>
           <HelpPage />
