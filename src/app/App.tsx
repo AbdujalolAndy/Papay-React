@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, NavLink, useLocation } from "react-router-dom"
 import { RestaurantPage } from './screens/RestaurantPage';
 import { CommunityPage } from './screens/CommunityPage';
 import { OrdersPage } from './screens/OrdersPage';
@@ -29,13 +29,12 @@ import { CartItem } from "./types/others";
 const App = () => {
   //Initializations
   const [verifiedMemberData, setVerifiedMemberData] = useState<Member | null>(),
-    [path, setPath] = useState(),
     [signUpOpen, setSignUpOpen] = useState(false),
     [logInOpen, setLogInOpen] = useState(false),
     [anchor, setAnchor] = useState<null | HTMLElement>(null),
     [orderRebuild, setOrderRebuild] = useState<Date>(new Date()),
     open = Boolean(anchor),
-    main_path = window.location.pathname;
+    { pathname } = useLocation()
 
   const cartJson: any = localStorage.getItem("cart_data");
   const current_cart: CartItem[] = JSON.parse(cartJson) ?? [];
@@ -114,11 +113,10 @@ const App = () => {
   }
 
   return (
-    <Router>
-      {main_path == "/" ? (
+    <div>
+      {pathname == "/" ? (
         <NavbarHome
           //
-          setPath={setPath}
           open={open}
           anchor={anchor}
           handleSignUpOpen={handleSignUpOpen}
@@ -136,10 +134,9 @@ const App = () => {
           //
           setOrderRebuild={setOrderRebuild}
         />
-      ) : main_path.includes('/restaurant') ? (
+      ) : pathname.includes('/restaurant') ? (
         <NavbarRestaurant
           //
-          setPath={setPath}
           open={open}
           anchor={anchor}
           handleLogInOpen={handleLogInOpen}
@@ -160,7 +157,6 @@ const App = () => {
       ) : (
         <NavbarOthers
           //
-          setPath={setPath}
           open={open}
           anchor={anchor}
           handleLogInOpen={handleLogInOpen}
@@ -179,7 +175,6 @@ const App = () => {
           setOrderRebuild={setOrderRebuild}
         />
       )}
-
       <Switch>
         <Route path='/restaurant'>
           <RestaurantPage onAdd={onAdd} />
@@ -191,7 +186,7 @@ const App = () => {
           <OrdersPage setOrderRebuild={setOrderRebuild} orderRebuild={orderRebuild} verifiedMemberData={verifiedMemberData} />
         </Route>
         <Route path='/member-page'>
-          <MemberPage verifiedMemberData = {verifiedMemberData}/>
+          <MemberPage verifiedMemberData={verifiedMemberData} />
         </Route>
         <Route path='/help'>
           <HelpPage />
@@ -212,7 +207,7 @@ const App = () => {
         handleLogInOpen={handleLogInOpen}
         handleLogInClose={handleLogInClose}
       />
-    </Router>
+    </div>
   );
 }
 export default App;

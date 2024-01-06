@@ -33,38 +33,38 @@ export function NavbarRestaurant(props: any) {
                         alignItems={"center"}
                         className="navbar_links"
                     >
-                        <Box className="hover-line" onClick={props.setPath}>
+                        <Box className="hover-line">
                             <NavLink to="/">
                                 Bosh Sahifa
                             </NavLink>
                         </Box>
-                        <Box className="hover-line" onClick={props.setPath}>
+                        <Box className="hover-line" >
                             <NavLink to="/restaurant" activeClassName="underline">
                                 Oshhona
                             </NavLink>
                         </Box>
                         {
                             props.verifiedMemberData ? (
-                                <Box className="hover-line" onClick={props.setPath}>
+                                <Box className="hover-line" >
                                     <NavLink to="/orders" activeClassName="underline">
                                         Buyurtma
                                     </NavLink>
                                 </Box>
                             ) : null
                         }
-                        <Box className="hover-line" onClick={props.setPath}>
+                        <Box className="hover-line" >
                             <NavLink to="/community" activeClassName="underline">
                                 Jamiyat
                             </NavLink>
                         </Box>
                         {props.verifiedMemberData ? (
-                            <Box className="hover-line" onClick={props.setPath}>
+                            <Box className="hover-line">
                                 <NavLink to="/member-page" activeClassName="underline">
                                     Sahifam
                                 </NavLink>
                             </Box>
                         ) : null}
-                        <Box className="hover-line" onClick={props.setPath}>
+                        <Box className="hover-line">
                             <NavLink to="/help" activeClassName="underline">
                                 Yordam
                             </NavLink>
