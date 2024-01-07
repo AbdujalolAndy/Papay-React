@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Pagination, PaginationItem, Stack } from "@mui/material";
 import { TabContext, TabPanel, TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
@@ -17,10 +17,15 @@ import { Dispatch } from "@reduxjs/toolkit";
 //Redux Imports
 import { setChosenMember, setChosenMemberBoArticles, setChosenSingleBoArticle } from "./slice";
 import { Member } from "../../types/user";
-import { BoArticle } from "../../types/boArticle";
+import { BoArticle, SearchMemberArticleObj } from "../../types/boArticle";
 import { createSelector } from "reselect"
 import { retrieveChosenMember, retrieveChosenMemberBoArticles, retrieveChosenSingleBoArticle } from "./selector";
 import { useDispatch, useSelector } from "react-redux";
+import { sweetFailureProvider } from "../../../lib/sweetAlert";
+import CommunityApiService from "../../apiServices/communityApiService";
+import MemberApiService from "../../apiServices/memberApiService";
+import { verifiedMemberData } from "../../apiServices/verify"
+import { serverApi } from "../../../lib/config";
 
 
 //Redux Slice
@@ -45,7 +50,7 @@ const chosenSingleBoArticleRetriever = createSelector(
 )
 
 export function VisitMyPage(props: any) {
-    // Initialize
+    // Initializations
     const [value, setValue] = React.useState("1"),
         {
             setChosenMember,
@@ -55,11 +60,36 @@ export function VisitMyPage(props: any) {
 
         { chosenMember } = useSelector(chosenMemberRetriever),
         { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever),
-        { verifiedMemberData } = props,
-        // Handle Change
-        handleChange = (event: any, newValue: string) => {
-            setValue(newValue)
-        }
+        { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever),
+        [memberArticleObj, setMemberArticleObj] = useState<SearchMemberArticleObj>({ mb_id: 'none', page: 1, limit: 5 }),
+        [rebuildArticle, setArticleRebuild] = useState<Date>(new Date),
+        [valuePage, setValuePage] = useState<number>(1)
+
+    //Hook
+    useEffect(() => {
+        if (!localStorage.getItem("member_data")) {
+            sweetFailureProvider("Please! Login first", true, true)
+        };
+        const communityService = new CommunityApiService();
+        communityService.chosenMemberCommunityArticles(memberArticleObj)
+            .then(data => setChosenMemberBoArticles(data))
+            .catch(err => console.log(err.message))
+
+        const memberService = new MemberApiService();
+        memberService.chosenMember(verifiedMemberData._id)
+            .then(data => setChosenMember(data))
+            .catch(err => console.log(err.message))
+    }, [memberArticleObj, rebuildArticle])
+
+    // Handle Change
+    const handleChange = (event: any, newValue: string) => {
+        setValue(newValue)
+    }
+    const handleChangePagination = (e: any, value: number) => {
+        memberArticleObj.page = value;
+        setMemberArticleObj({ ...memberArticleObj })
+        setValuePage(value)
+    }
     return (
         <div className="my_page">
             <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
@@ -70,7 +100,10 @@ export function VisitMyPage(props: any) {
                                 <TabPanel value={"1"}>
                                     <Box className="menu_name">Mening Maqolalarim</Box>
                                     <Box className="menu_content">
-                                        <MemberPosts />
+                                        <MemberPosts
+                                            chosenMemberBoArticles={chosenMemberBoArticles}
+                                            setArticleRebuild={setArticleRebuild}
+                                        />
                                         <Stack
                                             sx={{ my: "40px" }}
                                             direction={"row"}
@@ -79,8 +112,9 @@ export function VisitMyPage(props: any) {
                                         >
                                             <Box className="bottom_box">
                                                 <Pagination
-                                                    count={3}
-                                                    page={1}
+                                                    count={memberArticleObj.page >= 3 ? memberArticleObj.page + 1 : 3}
+                                                    page={valuePage}
+                                                    onChange={handleChangePagination}
                                                     renderItem={(item) => (
                                                         <PaginationItem
                                                             components={{
@@ -146,13 +180,13 @@ export function VisitMyPage(props: any) {
                                     alignItems={"center"}
                                 >
                                     <div className="order_user_img">
-                                        <img style={{ objectFit: "cover" }} src="/community/avatar_ex_3.jpg" className="order_user_avatar" />
+                                        <img style={{ objectFit: "cover" }} src={chosenMember?.mb_image ? `${serverApi}/${chosenMember.mb_image}` : "/auth/default_user.svg"} className="order_user_avatar" />
                                         <div className="order_user_icon_box">
                                             <img src="/icons/user_icon.svg" />
                                         </div>
                                     </div>
-                                    <span className="order_user_name">Abdujalol Nabijonov</span>
-                                    <span className="order_user_prof">USER</span>
+                                    <span className="order_user_name">{chosenMember?.mb_nick}</span>
+                                    <span className="order_user_prof">{chosenMember?.mb_type}</span>
                                 </Box>
                                 <Box className="user_media_box">
                                     <Facebook />
@@ -161,10 +195,10 @@ export function VisitMyPage(props: any) {
                                     <YouTube />
                                 </Box>
                                 <Box className="user_media_box">
-                                    <p className="follows">Followers: 3</p>
-                                    <p className="follows">Folliwings: 2</p>
+                                    <p className="follows">Followers: {chosenMember?.mb_follow_cnt}</p>
+                                    <p className="follows">Folliwings: {chosenMember?.me_followed.length}</p>
                                 </Box>
-                                <p className="user_desc">"qo'shimcha malumot kiritilmagan"</p>
+                                <p className="user_desc">{chosenMember?.mb_description ?? "qo'shimcha malumot kiritilmagan"}</p>
                                 <Box
                                     display={"flex"}
                                     justifyContent={"flex-end"}

@@ -17,9 +17,15 @@ export interface BoArticle {
     me_liked: MeLiked[]; //Meliked
 }
 
-export interface SearchBoArticle{
-bo_id:string,
-page:number,
-order?:string,
-limit:number
+export interface SearchBoArticle {
+    bo_id: string,
+    page: number,
+    order?: string,
+    limit: number
+}
+
+export interface SearchMemberArticleObj {
+    page: number;
+    limit: number;
+    mb_id: string;
 }

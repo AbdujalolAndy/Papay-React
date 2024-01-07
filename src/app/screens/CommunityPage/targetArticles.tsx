@@ -5,7 +5,7 @@ import { serverApi } from "../../../lib/config";
 import moment from "moment";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
-import BoArticlesApiService from "../../apiServices/boArticlesApiService";
+import BoArticlesApiService from "../../apiServices/communityApiService";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 
 

@@ -1,10 +1,10 @@
 import axios from "axios"
 import { serverApi } from "../../lib/config"
-import { BoArticle, SearchBoArticle } from "../types/boArticle"
+import { BoArticle, SearchBoArticle, SearchMemberArticleObj } from "../types/boArticle"
 import assert from "assert"
 import { Definer } from "../../lib/Definer"
 
-class BoArticlesApiService {
+class CommunityApiService {
     private readonly path: string
     constructor() {
         this.path = serverApi
@@ -39,6 +39,21 @@ class BoArticlesApiService {
             throw err
         }
     }
+
+    async chosenMemberCommunityArticles(data: SearchMemberArticleObj) {
+        try {
+            const url = `${this.path}/community/articles?mb_id=${data.mb_id}&page=${data.page}&limit=${data.limit}`;
+            const result = await axios.get(url, { withCredentials: true });
+            console.log("chosenMemberCommunityArticles state::", result.data.state);
+            assert.ok(result?.data, Definer.general_err1);
+            assert.ok(result?.data?.data, result?.data.message);
+            const articles: BoArticle[] = result.data.data;
+            return articles
+        } catch (err: any) {
+            console.log(`Error::: chosenMemberCommunityArticles, ${err.message}`)
+            throw err
+        }
+    }
 }
 
-export default BoArticlesApiService
+export default CommunityApiService

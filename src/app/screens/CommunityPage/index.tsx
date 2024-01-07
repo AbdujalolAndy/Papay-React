@@ -11,7 +11,7 @@ import { CommunityChats } from "./communityChats";
 import TargetArticles from "./targetArticles";
 import "../../../css/community.css"
 import { BoArticle, SearchBoArticle } from "../../types/boArticle";
-import BoArticlesApiService from "../../apiServices/boArticlesApiService";
+import BoArticlesApiService from "../../apiServices/communityApiService";
 import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { setTargetBoArticles } from "./slice";
