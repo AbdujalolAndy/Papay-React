@@ -11,7 +11,7 @@ import MemberApiService from "../../apiServices/memberApiService";
 
 export function MemberPosts(props: any) {
     //Initializations
-    const { chosenMemberBoArticles, setArticleRebuild } = props;
+    const { chosenMemberBoArticles, setArticleRebuild, chosenSingleBoArticleHandler } = props;
     //Handler
     const targetArticleLike = async (e: any) => {
         try {
@@ -35,11 +35,11 @@ export function MemberPosts(props: any) {
                 const image_path = article.art_image ?
                     `${serverApi}/${article.art_image}` :
                     "/community/default_article.svg"
-                console.log(image_path)
                 return (
                     <Stack
                         className="all_article_box"
                         sx={{ cursor: "pointer" }}
+                        onClick={()=>chosenSingleBoArticleHandler(article._id)}
                     >
                         <Box
                             className="all_article_img"

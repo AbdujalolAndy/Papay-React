@@ -21,11 +21,13 @@ import { BoArticle, SearchMemberArticleObj } from "../../types/boArticle";
 import { createSelector } from "reselect"
 import { retrieveChosenMember, retrieveChosenMemberBoArticles, retrieveChosenSingleBoArticle } from "./selector";
 import { useDispatch, useSelector } from "react-redux";
-import { sweetFailureProvider } from "../../../lib/sweetAlert";
+import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert";
 import CommunityApiService from "../../apiServices/communityApiService";
 import MemberApiService from "../../apiServices/memberApiService";
 import { verifiedMemberData } from "../../apiServices/verify"
 import { serverApi } from "../../../lib/config";
+import assert from "assert";
+import { Definer } from "../../../lib/Definer";
 
 
 //Redux Slice
@@ -51,7 +53,7 @@ const chosenSingleBoArticleRetriever = createSelector(
 
 export function VisitMyPage(props: any) {
     // Initializations
-    const [value, setValue] = React.useState("1"),
+    const [value, setValue] = React.useState<string>("1"),
         {
             setChosenMember,
             setChosenMemberBoArticles,
@@ -90,6 +92,21 @@ export function VisitMyPage(props: any) {
         setMemberArticleObj({ ...memberArticleObj })
         setValuePage(value)
     }
+    const chosenSingleBoArticleHandler = async (id: string) => {
+        try {
+            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            const communityService = new CommunityApiService();
+            await communityService.chosenSingleBoArticle(id)
+                .then(data => {
+                    setChosenSingleBoArticle(data)
+                    setValue("5")
+                })
+                .catch(err => console.log(err.message))
+            
+        } catch (err: any) {
+            sweetErrorHandling(err)
+        }
+    }
     return (
         <div className="my_page">
             <Container maxWidth="lg" sx={{ mt: "50px", mb: "50px" }}>
@@ -103,6 +120,7 @@ export function VisitMyPage(props: any) {
                                         <MemberPosts
                                             chosenMemberBoArticles={chosenMemberBoArticles}
                                             setArticleRebuild={setArticleRebuild}
+                                            chosenSingleBoArticleHandler={chosenSingleBoArticleHandler}
                                         />
                                         <Stack
                                             sx={{ my: "40px" }}
@@ -155,7 +173,7 @@ export function VisitMyPage(props: any) {
                                 <TabPanel value={"5"}>
                                     <Box className="menu_name">Tanlangan Maqola</Box>
                                     <Box className="menu_content">
-                                        <TViewer text={`<h3>Hello</h3>`} />
+                                        <TViewer chosenSingleBoArticle={chosenSingleBoArticle} />
                                     </Box>
                                 </TabPanel>
 
