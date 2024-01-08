@@ -65,6 +65,7 @@ export function VisitMyPage(props: any) {
         { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever),
         [memberArticleObj, setMemberArticleObj] = useState<SearchMemberArticleObj>({ mb_id: 'none', page: 1, limit: 5 }),
         [rebuildArticle, setArticleRebuild] = useState<Date>(new Date),
+        [followRebuild, setFollowRebuild] = useState<Date>(new Date()),
         [valuePage, setValuePage] = useState<number>(1)
 
     //Hook
@@ -102,7 +103,7 @@ export function VisitMyPage(props: any) {
                     setValue("5")
                 })
                 .catch(err => console.log(err.message))
-            
+
         } catch (err: any) {
             sweetErrorHandling(err)
         }
@@ -152,14 +153,24 @@ export function VisitMyPage(props: any) {
                                 <TabPanel value={"2"}>
                                     <Box className="menu_name">Followers</Box>
                                     <Box className="menu_content">
-                                        <MemberFollowers action_enabled={true} />
+                                        <MemberFollowers
+                                            action_enabled={true}
+                                            mb_id={verifiedMemberData._id}
+                                            followRebuild={followRebuild}
+                                            setFollowRebuild={setFollowRebuild}
+                                        />
                                     </Box>
                                 </TabPanel>
 
                                 <TabPanel value={"3"}>
                                     <Box className="menu_name">Following</Box>
                                     <Box className="menu_content">
-                                        <MemberFollowing action_enabled={true} />
+                                        <MemberFollowing
+                                            action_enabled={true}
+                                            mb_id={verifiedMemberData._id}
+                                            followRebuild={followRebuild}
+                                            setFollowRebuild={setFollowRebuild}
+                                        />
                                     </Box>
                                 </TabPanel>
 
@@ -200,7 +211,11 @@ export function VisitMyPage(props: any) {
                                     <div className="order_user_img">
                                         <img style={{ objectFit: "cover" }} src={chosenMember?.mb_image ? `${serverApi}/${chosenMember.mb_image}` : "/auth/default_user.svg"} className="order_user_avatar" />
                                         <div className="order_user_icon_box">
-                                            <img src="/icons/user_icon.svg" />
+                                            <img src={
+                                                chosenMember?.mb_type === "RESTAURANT" ?
+                                                    "/icons/restaurant.svg" :
+                                                    "/icons/user_icon.svg"
+                                            } />
                                         </div>
                                     </div>
                                     <span className="order_user_name">{chosenMember?.mb_nick}</span>
@@ -213,8 +228,8 @@ export function VisitMyPage(props: any) {
                                     <YouTube />
                                 </Box>
                                 <Box className="user_media_box">
-                                    <p className="follows">Followers: {chosenMember?.mb_follow_cnt}</p>
-                                    <p className="follows">Folliwings: {chosenMember?.me_followed.length}</p>
+                                    <p className="follows">Followers: {chosenMember?.mb_subscriber_cnt}</p>
+                                    <p className="follows">Folliwings: {chosenMember?.mb_follow_cnt}</p>
                                 </Box>
                                 <p className="user_desc">{chosenMember?.mb_description ?? "qo'shimcha malumot kiritilmagan"}</p>
                                 <Box

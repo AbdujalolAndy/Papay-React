@@ -56,7 +56,7 @@ class MemberApiService {
             throw err
         }
     }
-    async memberLikeTarget(data: any) {
+    async memberLikeTarget(data: any): Promise<MemberLiken> {
         try {
             const result = await axios.post(this.path + "/member-liken", data, { withCredentials: true })
             console.log("MemberLikeTarget state::", result.data.state);
@@ -70,7 +70,7 @@ class MemberApiService {
         }
     }
 
-    async chosenMember(id: string) {
+    async chosenMember(id: string): Promise<Member> {
         try {
             const url = `${this.path}/member/${id}`;
             const result = await axios.get(url, { withCredentials: true });

@@ -40,7 +40,7 @@ class CommunityApiService {
         }
     }
 
-    async chosenMemberCommunityArticles(data: SearchMemberArticleObj) {
+    async chosenMemberCommunityArticles(data: SearchMemberArticleObj): Promise<BoArticle[]> {
         try {
             const url = `${this.path}/community/articles?mb_id=${data.mb_id}&page=${data.page}&limit=${data.limit}`;
             const result = await axios.get(url, { withCredentials: true });
@@ -54,7 +54,7 @@ class CommunityApiService {
             throw err
         }
     }
-    async chosenSingleBoArticle(id: string) {
+    async chosenSingleBoArticle(id: string): Promise<BoArticle> {
         try {
             const url = `${this.path}/community/single-article/${id}`;
             const result = await axios.get(url, { withCredentials: true });

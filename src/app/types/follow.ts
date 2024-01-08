@@ -6,18 +6,26 @@ export interface MeFollowed {
     my_following: boolean;
 }
 
-export interface Follower{
-    _id:string,
-    subscriber_id:string;
-    updatedAt:Date;
-    createdAt:Date;
-    subscriber_member_data:Member,
-    me_followed:MeFollowed[] | null;
+export interface Follower {
+    _id: string,
+    follow_id: string,
+    subscriber_id: string;
+    updatedAt: Date;
+    createdAt: Date;
+    subscriber_member_data: Member,
+    me_followed: MeFollowed[] | null;
 }
-export interface Following{
-    _id:string,
-    subscriber_id:string;
-    updatedAt:Date;
-    createdAt:Date;
-    follow_member_data:Member
+export interface Following {
+    _id: string,
+    subscriber_id: string;
+    follow_id: string;
+    updatedAt: Date;
+    createdAt: Date;
+    follow_member_data: Member
+}
+
+export interface FollowSearchObj {
+    mb_id: string,
+    page: number,
+    limit: number
 }
