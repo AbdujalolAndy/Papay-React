@@ -32,14 +32,14 @@ export function MemberPosts(props: any) {
     return (
         <Box className="post_content">
             {chosenMemberBoArticles.map((article: BoArticle) => {
-                const image_path = article.art_image ?
-                    `${serverApi}/${article.art_image}` :
-                    "/community/default_article.svg"
+                const image_path = article.art_image
+                    ? `${serverApi}/${article.art_image.replace(/\\/g, "/")}`
+                    : "/community/default_article.svg";
                 return (
                     <Stack
                         className="all_article_box"
                         sx={{ cursor: "pointer" }}
-                        onClick={()=>chosenSingleBoArticleHandler(article._id)}
+                        onClick={() => chosenSingleBoArticleHandler(article._id)}
                     >
                         <Box
                             className="all_article_img"
@@ -51,7 +51,11 @@ export function MemberPosts(props: any) {
                                 display={"flex"}
                             >
                                 <img
-                                    src={article.member_data.mb_image ? `${serverApi}/${article.member_data.mb_image}` : "/auth/default_user.svg"}
+                                    src={
+                                        article?.member_data?.mb_image
+                                            ? `${serverApi}/${article.member_data.mb_image}`
+                                            : "/auth/default_user.svg"
+                                    }
                                     width={"35px"}
                                     style={{ borderRadius: "50%", backgroundSize: "cover" }}
                                 />
@@ -63,7 +67,7 @@ export function MemberPosts(props: any) {
                                 sx={{ mt: "15px" }}
                             >
                                 <span className="all_article_title">{article?.bo_id}</span>
-                                <p className="all_article_desc">{article?.art_content}</p>
+                                <p className="all_article_desc">{article?.art_subject}</p>
                             </Box>
                             <Box>
                                 <Box

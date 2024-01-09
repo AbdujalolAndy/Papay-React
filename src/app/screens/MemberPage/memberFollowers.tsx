@@ -14,6 +14,7 @@ import FollowApiService from "../../apiServices/followApiService"
 import { serverApi } from "../../../lib/config"
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert"
 import { ArrowBack, ArrowForward } from "@mui/icons-material"
+import { useHistory } from "react-router"
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -32,6 +33,7 @@ interface MemberFollowers {
 
 export function MemberFollowers(props: any) {
     //Initializations
+    const history = useHistory();
     const { action_enabled, mb_id, followRebuild, setFollowRebuild } = props
     const { setMemberFollowers } = actionDispatch(useDispatch())
     const { memberFollowers } = useSelector(memberFollowersRetriever);
@@ -52,7 +54,7 @@ export function MemberFollowers(props: any) {
             assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
             const followService = new FollowApiService();
             await followService.subscribe(id)
-            sweetTopSmallSuccessAlert("success", 700, false)
+            sweetTopSmallSuccessAlert("subscribed successfully", 700, false)
             setFollowRebuild(new Date())
         } catch (err: any) {
             console.log(`ERROR::: subscribeHandler ${err.message}`);
@@ -63,6 +65,10 @@ export function MemberFollowers(props: any) {
         followerSearchObj.page = newValue;
         setFollowerSearchObj({ ...followerSearchObj })
     }
+    const visitMemberHandler = (mb_id: string) => {
+        history.push(`/member-page/other?mb_id=${mb_id}`);
+        document.location.reload();
+    };
     return (
         <Stack>
             {memberFollowers.map((follower: Follower) => {
@@ -71,7 +77,12 @@ export function MemberFollowers(props: any) {
                     : "/auth/default_user.svg"
                 return (
                     <Box className="follow_box">
-                        <Avatar alt={""} src={image_url} sx={{ width: 89, height: 89 }} />
+                        <Avatar
+                            alt={""}
+                            src={image_url}
+                            sx={{ width: 89, height: 89 }}
+                            onClick={() => visitMemberHandler(follower?.subscriber_id)}
+                        />
                         <div
                             style={{
                                 width: "400px",

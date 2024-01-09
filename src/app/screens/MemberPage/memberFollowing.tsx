@@ -15,6 +15,7 @@ import assert from "assert"
 import { Definer } from "../../../lib/Definer"
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert"
 import { ArrowBack, ArrowForward } from "@mui/icons-material"
+import { useHistory } from "react-router"
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -31,6 +32,7 @@ interface MemberFollowing {
 
 export function MemberFollowing(props: any) {
     //Initializations
+    const history = useHistory();
     const { action_enabled, mb_id, followRebuild, setFollowRebuild } = props,
         { setMemberFollowing } = actionDispatch(useDispatch()),
         { memberFollowing } = useSelector(memberFollowingRetriever),
@@ -54,7 +56,7 @@ export function MemberFollowing(props: any) {
             assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
             const followService = new FollowApiService();
             await followService.unsubscribe(id);
-            sweetTopSmallSuccessAlert("success", 700, false);
+            sweetTopSmallSuccessAlert("unsubscribed successfully", 700, false);
             setFollowRebuild(new Date())
         } catch (err: any) {
             sweetErrorHandling(err)
@@ -64,6 +66,10 @@ export function MemberFollowing(props: any) {
         followingSearchObj.page = newValue;
         setFollowingSearchObj({ ...followingSearchObj })
     }
+    const visitMemberHandler = (mb_id: string) => {
+        history.push(`/member-page/other?mb_id=${mb_id}`);
+        document.location.reload();
+    };
     return (
         <Stack>
             {memberFollowing.map((following: Following) => {
@@ -72,7 +78,11 @@ export function MemberFollowing(props: any) {
                     "/auth/default_user.svg"
                 return (
                     <Box className="follow_box">
-                        <Avatar alt={""} src={image_url} sx={{ width: 89, height: 89 }} />
+                        <Avatar
+                            alt={""}
+                            src={image_url}
+                            sx={{ width: 89, height: 89 }}
+                            onClick={() => visitMemberHandler(following?.follow_id)} />
                         <div
                             style={{
                                 width: "400px",

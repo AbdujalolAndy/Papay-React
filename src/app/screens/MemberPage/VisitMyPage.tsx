@@ -175,9 +175,12 @@ export function VisitMyPage(props: any) {
                                 </TabPanel>
 
                                 <TabPanel value={"4"}>
-                                    <Box className="menu_name">Maqola Yozish</Box>
-                                    <Box className="write_content">
-                                        <TuiEditor />
+                                    <Box className={"menu_name"}>Maqola yozish</Box>
+                                    <Box className={"write_content"}>
+                                        <TuiEditor
+                                            setValue={setValue}
+                                            setArticlesRebuild={setArticleRebuild}
+                                        />
                                     </Box>
                                 </TabPanel>
 
