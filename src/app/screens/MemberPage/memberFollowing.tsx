@@ -16,6 +16,7 @@ import { Definer } from "../../../lib/Definer"
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert"
 import { ArrowBack, ArrowForward } from "@mui/icons-material"
 import { useHistory } from "react-router"
+import { verifiedMemberData } from "../../apiServices/verify"
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -53,7 +54,7 @@ export function MemberFollowing(props: any) {
     const unsubscribeHandler = async (e: any, id: string) => {
         try {
             e.stopPropagation()
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const followService = new FollowApiService();
             await followService.unsubscribe(id);
             sweetTopSmallSuccessAlert("unsubscribed successfully", 700, false);

@@ -11,7 +11,6 @@ import "../../../css/my_page.css"
 export function MemberPage(props: any) {
     //Initializations
     const member = useRouteMatch(),
-        { verifiedMemberData } = props,
         useQuery = () => {
             const { search } = useLocation();
             return React.useMemo(() => (new URLSearchParams(search)), [search])
@@ -24,14 +23,12 @@ export function MemberPage(props: any) {
             <Switch>
                 <Route path={`${member.path}/other`}>
                     <VisitorOtherPage
-                        verifiedMemberData={verifiedMemberData}
                         chosen_mb_id={chosen_mb_id}
                         chosen_art_id={chosen_art_id}
                     />
                 </Route>
                 <Route path={`${member.path}/`}>
                     <VisitMyPage
-                        verifiedMemberData={verifiedMemberData}
                         chosen_art_id={chosen_art_id}
                     />
                 </Route>

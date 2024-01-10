@@ -13,6 +13,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 import Basket from "./basket";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 
 export function NavbarHome(props: any) {
@@ -44,7 +45,7 @@ export function NavbarHome(props: any) {
                             </NavLink>
                         </Box>
                         {
-                            props.verifiedMemberData ? (
+                            verifiedMemberData ? (
                                 <Box className="hover-line">
                                     <NavLink to="/orders" activeClassName="underline">
                                         Buyurtma
@@ -58,7 +59,7 @@ export function NavbarHome(props: any) {
                                 Jamiyat
                             </NavLink>
                         </Box>
-                        {props.verifiedMemberData ? (
+                        {verifiedMemberData ? (
                             <Box className="hover-line" >
                                 <NavLink to="/member-page" activeClassName="underline">
                                     Sahifam
@@ -78,8 +79,8 @@ export function NavbarHome(props: any) {
                             onDeleteAll={props.onDeleteAll}
                             setOrderRebuild={props.setOrderRebuild}
                         />
-                        {props.verifiedMemberData ? (
-                            <img style={{ width: "48px", height: "48px", borderRadius: "50%" }} src={props.verifiedMemberData.mb_image} alt="user" onClick={props.handleLogOutClick} />
+                        {verifiedMemberData ? (
+                            <img style={{ width: "48px", height: "48px", borderRadius: "50%" }} src={verifiedMemberData.mb_image} alt="user" onClick={props.handleLogOutClick} />
                         ) : (
                             <Box>
                                 <Button onClick={props.handleLogInOpen} variant='contained' style={{ color: "#ffffff", background: "#1976d2" }}>
@@ -142,7 +143,7 @@ export function NavbarHome(props: any) {
                         </Box>
                         <Box className="timeline_service">24 soat xizmatingizdamiz.</Box>
 
-                        {props.verifiedMemberData ?
+                        {verifiedMemberData ?
                             null :
                             (
                                 <Box sx={{ mt: "90px" }}>

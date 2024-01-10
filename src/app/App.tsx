@@ -125,7 +125,6 @@ const App = () => {
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           //
-          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -145,7 +144,6 @@ const App = () => {
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           //
-          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -165,7 +163,6 @@ const App = () => {
           handleLogOutClose={handleLogOutClose}
           handleLogout={handleLogoutRequest}
           //
-          verifiedMemberData={verifiedMemberData}
           cartItems={cartItems}
           onAdd={onAdd}
           onRemove={onRemove}
@@ -183,10 +180,10 @@ const App = () => {
           <CommunityPage />
         </Route>
         <Route path='/orders'>
-          <OrdersPage setOrderRebuild={setOrderRebuild} orderRebuild={orderRebuild} verifiedMemberData={verifiedMemberData} />
+          <OrdersPage setOrderRebuild={setOrderRebuild} orderRebuild={orderRebuild} />
         </Route>
         <Route path='/member-page'>
-          <MemberPage verifiedMemberData={verifiedMemberData} />
+          <MemberPage />
         </Route>
         <Route path='/help'>
           <HelpPage />

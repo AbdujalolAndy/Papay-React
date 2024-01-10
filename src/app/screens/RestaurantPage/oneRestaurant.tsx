@@ -23,6 +23,7 @@ import assert from "assert";
 import MemberApiService from "../../apiServices/memberApiService";
 import { Definer } from "../../../lib/Definer";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -107,7 +108,7 @@ export function OneRestaurant(props: any) {
     }
     const targetLikeProduct = async (event: any) => {
         try {
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const memberServiceApi = new MemberApiService();
             const like_result = await memberServiceApi.memberLikeTarget({ like_ref_id: event.target.id, group_type: 'product' })
             assert.ok(like_result, Definer.general_err1);

@@ -11,6 +11,7 @@ import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAler
 import assert from "assert"
 import { Definer } from "../../../lib/Definer"
 import OrderServiceApi from "../../apiServices/orderApiService"
+import { verifiedMemberData } from "../../apiServices/verify"
 
 //Redux Selector 
 const pausedOrdersRetriever = createSelector(
@@ -28,7 +29,7 @@ export default function PausedOrders(props: any) {
     const deleteOrderHandler = async (event: any) => {
         try {
             const order_id = event.target.value;
-            if (!localStorage.getItem("member_data")) {
+            if (!verifiedMemberData) {
                 await sweetFailureProvider("Please, login first!")
             }
             let confirmation = window.confirm("Buyurtmangizni bekor qilmoqchimisz?")
@@ -44,7 +45,7 @@ export default function PausedOrders(props: any) {
     const payOrderHandler = async (event: any) => {
         try {
             const order_id = event.target.value;
-            if (!localStorage.getItem("member_data")) {
+            if (!verifiedMemberData) {
                 await sweetFailureProvider("Please, login first!")
             }
             let confirmation = window.confirm("Buyurtmangizga to'lovni amalga oshirasizmi?")

@@ -7,6 +7,7 @@ import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import BoArticlesApiService from "../../apiServices/communityApiService";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 
 export default function TargetArticles(props: any) {
@@ -14,7 +15,7 @@ export default function TargetArticles(props: any) {
     //Handlers
     const targetLikeArticle = async (event: any) => {
         try {
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const boArticleServiceApi = new BoArticlesApiService(),
                 like_result = await boArticleServiceApi.boArticlesLikeTarget({ like_ref_id: event.target.value, group_type: 'community' })
             assert.ok(like_result, Definer.general_err1);

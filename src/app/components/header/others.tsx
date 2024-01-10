@@ -13,6 +13,7 @@ import {
 import react from "react";
 import { NavLink } from "react-router-dom";
 import Basket from "./basket";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 
 
@@ -45,7 +46,7 @@ export function NavbarOthers(props: any) {
                             </NavLink>
                         </Box>
                         {
-                            props.verifiedMemberData ? (
+                            verifiedMemberData ? (
                                 <Box className="hover-line" >
                                     <NavLink to="/orders" activeClassName="underline">
                                         Buyurtma
@@ -58,7 +59,7 @@ export function NavbarOthers(props: any) {
                                 Jamiyat
                             </NavLink>
                         </Box>
-                        {props.verifiedMemberData ? (
+                        {verifiedMemberData ? (
                             <Box className="hover-line">
                                 <NavLink to="/member-page" activeClassName="underline">
                                     Sahifam
@@ -77,13 +78,13 @@ export function NavbarOthers(props: any) {
                             onDelete={props.onDelete}
                             onDeleteAll={props.onDeleteAll}
                         />
-                        {props.verifiedMemberData ? (
+                        {verifiedMemberData ? (
                             <img style={{
                                 width: "48px",
                                 height: "48px",
                                 borderRadius: "50%"
                             }}
-                                src={props.verifiedMemberData.mb_image}
+                                src={verifiedMemberData.mb_image}
                                 alt="user"
                                 onClick={props.handleLogOutClick} />
                         ) : (

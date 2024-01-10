@@ -28,6 +28,7 @@ import MemberApiService from "../../apiServices/memberApiService";
 import { Definer } from "../../../lib/Definer";
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 import { useHistory } from "react-router";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -72,7 +73,7 @@ export function AllRestaurants() {
 
     const targetLikeHandler = async (event: any, id: string) => {
         try {
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const memberServiceApi = new MemberApiService();
             const like_result = await memberServiceApi.memberLikeTarget({ like_ref_id: id, group_type: 'member' })
             assert.ok(like_result, Definer.general_err1);

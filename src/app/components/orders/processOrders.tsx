@@ -10,6 +10,7 @@ import OrderServiceApi from "../../apiServices/orderApiService"
 import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert"
 import { Definer } from "../../../lib/Definer"
 import moment from "moment"
+import { verifiedMemberData } from "../../apiServices/verify"
 
 //Redux Selector
 const processOrdersRetriever = createSelector(
@@ -24,7 +25,7 @@ export default function ProcessOrders(props: any) {
     const finishedOrderHandler = async (event: any) => {
         try {
             const order_id = event.target.value;
-            if (!localStorage.getItem("member_data")) {
+            if (!verifiedMemberData) {
                 await sweetFailureProvider("Please, login first!", true)
             }
             let confirmation = window.confirm("Buyurtmani olganingizni tasdiqlaysizmi?");

@@ -70,7 +70,7 @@ export function VisitMyPage(props: any) {
 
     //Hook
     useEffect(() => {
-        if (!localStorage.getItem("member_data")) {
+        if (!verifiedMemberData) {
             sweetFailureProvider("Please! Login first", true, true)
         };
         const communityService = new CommunityApiService();
@@ -95,7 +95,7 @@ export function VisitMyPage(props: any) {
     }
     const chosenSingleBoArticleHandler = async (id: string) => {
         try {
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const communityService = new CommunityApiService();
             await communityService.chosenSingleBoArticle(id)
                 .then(data => {

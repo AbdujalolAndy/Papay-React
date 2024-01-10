@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { Logout } from "@mui/icons-material";
 import Basket from "./basket";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 
 export function NavbarRestaurant(props: any) {
@@ -44,7 +45,7 @@ export function NavbarRestaurant(props: any) {
                             </NavLink>
                         </Box>
                         {
-                            props.verifiedMemberData ? (
+                            verifiedMemberData ? (
                                 <Box className="hover-line" >
                                     <NavLink to="/orders" activeClassName="underline">
                                         Buyurtma
@@ -57,7 +58,7 @@ export function NavbarRestaurant(props: any) {
                                 Jamiyat
                             </NavLink>
                         </Box>
-                        {props.verifiedMemberData ? (
+                        {verifiedMemberData ? (
                             <Box className="hover-line">
                                 <NavLink to="/member-page" activeClassName="underline">
                                     Sahifam
@@ -85,7 +86,7 @@ export function NavbarRestaurant(props: any) {
                                     height: "48px",
                                     borderRadius: "50%"
                                 }}
-                                src={props.verifiedMemberData.mb_image}
+                                src={verifiedMemberData.mb_image}
                                 onClick={props.handleLogOutClick}
                                 alt="user" />
                         ) : (

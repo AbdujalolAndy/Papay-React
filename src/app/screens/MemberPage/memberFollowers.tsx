@@ -15,6 +15,7 @@ import { serverApi } from "../../../lib/config"
 import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert"
 import { ArrowBack, ArrowForward } from "@mui/icons-material"
 import { useHistory } from "react-router"
+import { verifiedMemberData } from "../../apiServices/verify"
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -41,7 +42,7 @@ export function MemberFollowers(props: any) {
 
     //Hook
     useEffect(() => {
-        assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+        assert.ok(verifiedMemberData, Definer.auth_err1);
         const followService = new FollowApiService();
         followService.getMemberFollowers(followerSearchObj)
             .then(data => setMemberFollowers(data))
@@ -51,7 +52,7 @@ export function MemberFollowers(props: any) {
     const subscribeHandler = async (e: any, id: string) => {
         try {
             e.stopPropagation()
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const followService = new FollowApiService();
             await followService.subscribe(id)
             sweetTopSmallSuccessAlert("subscribed successfully", 700, false)

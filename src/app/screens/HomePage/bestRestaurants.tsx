@@ -17,6 +17,7 @@ import MemberApiService from "../../apiServices/memberApiService";
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import { useHistory } from "react-router";
+import { verifiedMemberData } from "../../apiServices/verify";
 
 
 
@@ -35,7 +36,7 @@ export function BestRestaurants() {
 
     const targetLikeBestRestaurant = async (event: any, id: string) => {
         try {
-            assert.ok(localStorage.getItem("member_data"), Definer.auth_err1);
+            assert.ok(verifiedMemberData, Definer.auth_err1);
             const memberApiService = new MemberApiService();
             const like_result = await memberApiService.memberLikeTarget({ like_ref_id: id, group_type: "member" });
             assert.ok(like_result, Definer.general_err1);
