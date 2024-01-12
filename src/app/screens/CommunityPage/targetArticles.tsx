@@ -31,9 +31,9 @@ export default function TargetArticles(props: any) {
                 const art_img_url = article?.art_image ? `${serverApi}/${article?.art_image?.replace(/\\/g, "/")}` : "/community/default_article.svg"
                 return (
                     <Link
-                        href=""
                         sx={{ textDecoration: "none" }}
                         className="all_article_box"
+                        href={`/member-page/other?mb_id=${article.mb_id}&art_id=${article._id}`}
                     >
                         <Box
                             className={"all_article_img"}
