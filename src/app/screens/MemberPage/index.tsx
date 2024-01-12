@@ -1,5 +1,4 @@
-import React from "react"
-import { Container } from "@mui/material"
+import React, { useEffect } from "react"
 import { Route, Switch, useRouteMatch, useLocation } from "react-router-dom"
 import { VisitorOtherPage } from "./VisitorOtherPage"
 import { VisitMyPage } from "./VisitMyPage"

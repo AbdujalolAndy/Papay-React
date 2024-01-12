@@ -26,8 +26,6 @@ import CommunityApiService from "../../apiServices/communityApiService";
 import MemberApiService from "../../apiServices/memberApiService";
 import { verifiedMemberData } from "../../apiServices/verify"
 import { serverApi } from "../../../lib/config";
-import assert from "assert";
-import { Definer } from "../../../lib/Definer";
 
 
 //Redux Slice
@@ -59,27 +57,28 @@ export function VisitMyPage(props: any) {
             setChosenMemberBoArticles,
             setChosenSingleBoArticle
         } = actionDsipatch(useDispatch()),
-
         { chosenMember } = useSelector(chosenMemberRetriever),
         { chosenSingleBoArticle } = useSelector(chosenSingleBoArticleRetriever),
         { chosenMemberBoArticles } = useSelector(chosenMemberBoArticlesRetriever),
-        [memberArticleObj, setMemberArticleObj] = useState<SearchMemberArticleObj>({ mb_id: 'none', page: 1, limit: 5 }),
+        [memberArticleObj, setMemberArticleObj] = useState<SearchMemberArticleObj>(
+            { mb_id: 'none', page: 1, limit: 5 }
+        ),
         [rebuildArticle, setArticleRebuild] = useState<Date>(new Date),
         [followRebuild, setFollowRebuild] = useState<Date>(new Date()),
-        [valuePage, setValuePage] = useState<number>(1)
+        [valuePage, setValuePage] = useState<number>(1);
 
     //Hook
     useEffect(() => {
-        if (!verifiedMemberData) {
-            sweetFailureProvider("Please! Login first", true, true)
-        };
+        if(!verifiedMemberData){
+            sweetFailureProvider("Please, login first!", true)
+        }
         const communityService = new CommunityApiService();
         communityService.chosenMemberCommunityArticles(memberArticleObj)
             .then(data => setChosenMemberBoArticles(data))
             .catch(err => console.log(err.message))
 
         const memberService = new MemberApiService();
-        memberService.chosenMember(verifiedMemberData._id)
+        memberService.chosenMember(verifiedMemberData?._id)
             .then(data => setChosenMember(data))
             .catch(err => console.log(err.message))
     }, [memberArticleObj, rebuildArticle])
@@ -95,7 +94,6 @@ export function VisitMyPage(props: any) {
     }
     const chosenSingleBoArticleHandler = async (id: string) => {
         try {
-            assert.ok(verifiedMemberData, Definer.auth_err1);
             const communityService = new CommunityApiService();
             await communityService.chosenSingleBoArticle(id)
                 .then(data => {
@@ -155,7 +153,7 @@ export function VisitMyPage(props: any) {
                                     <Box className="menu_content">
                                         <MemberFollowers
                                             action_enabled={true}
-                                            mb_id={verifiedMemberData._id}
+                                            mb_id={verifiedMemberData?._id}
                                             followRebuild={followRebuild}
                                             setFollowRebuild={setFollowRebuild}
                                         />
@@ -167,7 +165,7 @@ export function VisitMyPage(props: any) {
                                     <Box className="menu_content">
                                         <MemberFollowing
                                             action_enabled={true}
-                                            mb_id={verifiedMemberData._id}
+                                            mb_id={verifiedMemberData?._id}
                                             followRebuild={followRebuild}
                                             setFollowRebuild={setFollowRebuild}
                                         />

@@ -44,15 +44,20 @@ export const sweetTopSmallSuccessAlert = async (msg: string, duration: number = 
     })
 }
 
-export const sweetFailureProvider = async (msg: string, show_button: boolean = false, enable_forward: boolean = false, forward_url: string = "/") => {
-    await Swal.fire({
+export const sweetFailureProvider = (
+    msg: string,
+    show_button: boolean = false,
+    enable_forward: boolean = false,
+    forward_url: string = "/"
+) => {
+    Swal.fire({
         icon: "error",
         title: msg,
         showConfirmButton: show_button,
-        confirmButtonText: "OK"
-    }).then(data => {
+        confirmButtonText: "OK",
+    }).then((data) => {
         if (enable_forward) {
-            window.location.reload()
+            window.location.replace(forward_url);
         }
-    })
-}
+    });
+};
