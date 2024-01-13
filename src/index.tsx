@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom"
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './app/MaterialTheme/index';
-
+import { socketContext, socket } from "./app/Context/socket"
 
 ReactDom.render(
   <React.StrictMode>
@@ -18,7 +18,9 @@ ReactDom.render(
       <Router>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+          <socketContext.Provider value={socket}>
+            <App />
+          </socketContext.Provider>
         </ThemeProvider>
       </Router>
     </Provider>

@@ -1,19 +1,42 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import "../../../css/community.css"
 import { Avatar, Box, Container, Stack } from "@mui/material";
 import { Send } from "@mui/icons-material";
+import { socketContext } from "../../Context/socket";
 
 export const CommunityChats = (props: any) => {
     //Initializations
-    const [messageList, setMessageList] = React.useState();
-
+    const [new_message, setNew_message] = React.useState<string>();
+    const [onlineUsers, setOnlineUsers] = useState<number>(0)
+    const socket = useContext(socketContext)
     //Hooks
-    useEffect(()=>{
-        console.log("test")
-    },[])
+    useEffect(() => {
+        socket.connect();
+
+        socket?.on("connect", () => {
+            console.log("Client connect")
+        })
+
+        socket?.on("newMsg", (new_message: string) => {
+            console.log("Client new message")
+        })
+
+        socket?.on("greetMsg", (new_message: string) => {
+            console.log("Client greeting message")
+        })
+
+        socket?.on("infoMsg", (msg: any) => {
+            console.log("Client info message")
+            setOnlineUsers(msg.total)
+        })
+
+        return () => {
+            socket.disconnect()
+        };
+    }, [socket])
     return (
         <Stack className="chat_frame">
-            <Box className="chat_top">Jonli Muloqot</Box>
+            <Box className="chat_top">Jonli Muloqot{onlineUsers}</Box>
             <Box className="chat_content">
                 <Box className="chat_main">
                     <Box
