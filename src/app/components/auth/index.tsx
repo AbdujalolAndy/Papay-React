@@ -8,8 +8,9 @@ import { sweetErrorHandling, sweetFailureProvider, sweetTopSuccessAlert } from "
 import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import MemberApiService from "../../apiServices/memberApiService";
+import { useState } from "react";
 
-const UseStyle = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     modal: {
         display: "flex",
         alignItems: "center",
@@ -33,36 +34,35 @@ margin-left:10px
 `
 export default function AuthenticationModal(props: any) {
     //INITIALIZATIONS
-    const classes = UseStyle();
-    let mb_nick: string = "",
-        mb_password: string = "",
-        mb_phone: number = 0
+    const classes = useStyles(),
+        [mb_nick, set_mb_nick] = useState<string>(""),
+        [mb_password, set_mb_password] = useState<string>(""),
+        [mb_phone, set_mb_phone] = useState<number>(0),
+        //Handler
+        handlerUserName = (e: any) => set_mb_nick(e.target.value),
+        handlerPhone = (e: any) => set_mb_phone(e.target.value),
+        handlerPassword = (e: any) => set_mb_password(e.target.value),
 
-    //Handler
-    const handlerUserName = (e: any) => mb_nick = e.target.value;
-    const handlerPhone = (e: any) => mb_phone = e.target.value;
-    const handlerPassword = (e: any) => mb_password = e.target.value;
+        handleSignUpRequest = async () => {
+            try {
+                const is_fulfilled = mb_nick != "" && mb_password != "" && mb_phone != 0;
+                assert.ok(is_fulfilled, Definer.input_err1);
+                const signUpData = {
+                    mb_nick: mb_nick,
+                    mb_password: mb_password,
+                    mb_phone: mb_phone
+                }
 
-    const handleSignUpRequest = async () => {
-        try {
-            const is_fulfilled = mb_nick != "" && mb_password != "" && mb_phone != 0;
-            assert.ok(is_fulfilled, Definer.input_err1);
-            const signUpData = {
-                mb_nick: mb_nick,
-                mb_password: mb_password,
-                mb_phone: mb_phone
+                const memberApiService = new MemberApiService();
+                await memberApiService.signupRequest(signUpData);
+
+                props.handleSignUpClose()
+                window.location.reload();
+            } catch (err: any) {
+                props.handleSignUpClose()
+                sweetErrorHandling(err).then()
             }
-
-            const memberApiService = new MemberApiService();
-            await memberApiService.signupRequest(signUpData);
-
-            props.handleSignUpClose()
-            window.location.reload();
-        } catch (err: any) {
-            props.handleSignUpClose()
-            sweetErrorHandling(err).then()
         }
-    }
 
     const handleRequest = async () => {
         try {
@@ -79,6 +79,14 @@ export default function AuthenticationModal(props: any) {
         } catch (err: any) {
             props.handleLogInClose()
             sweetErrorHandling(err).then()
+        }
+    }
+
+    const passwordKeyDowwnHandle = (e: any) => {
+        if (e.key === "Enter" && props.signUpOpen) {
+            handleSignUpRequest()
+        } else if (e.key === "Enter" && props.logInOpen) {
+            handleRequest()
         }
     }
     return (
@@ -116,6 +124,7 @@ export default function AuthenticationModal(props: any) {
                             />
                             <TextField
                                 onChange={handlerPassword}
+                                onKeyDown={passwordKeyDowwnHandle}
                                 id="outlinned-basic"
                                 label="password"
                                 variant="outlined"
@@ -160,6 +169,7 @@ export default function AuthenticationModal(props: any) {
                             />
                             <TextField
                                 onChange={handlerPassword}
+                                onKeyDown={passwordKeyDowwnHandle}
                                 id="outlinned-basic"
                                 label="password"
                                 variant="outlined"

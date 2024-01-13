@@ -64,6 +64,7 @@ export const TuiEditor = (props: any) => {
         [communityArticleData.art_subject]
     );
 
+
     const handleRegisterButton = async () => {
         try {
             const editor: any = editorRef.current;
@@ -120,7 +121,7 @@ export const TuiEditor = (props: any) => {
                         </Select>
                     </FormControl>
                 </Box>
-                <Box className={"form_row"} style={{ width: "300px" }}>
+                <div className="form_row" style={{ width: "300px", height: "60px" }}>
                     <Typography
                         style={{ color: "rgb(225 255 233)", margin: "10px" }}
                         variant="h3"
@@ -134,7 +135,8 @@ export const TuiEditor = (props: any) => {
                         style={{ width: "300px", background: "white" }}
                         onChange={changeTitleHandler}
                     />
-                </Box>
+                </div>
+
             </Stack>
 
             {/*@ts-ignore*/}

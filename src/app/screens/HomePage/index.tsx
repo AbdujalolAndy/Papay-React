@@ -15,6 +15,7 @@ import {
 } from "./slice";
 import { Restaurant } from "../../types/user";
 import RestaurantApiService from "../../apiServices/restaurantApiService";
+import { Recommendations } from "./recommendations";
 
 /** REDUX SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -54,6 +55,7 @@ export function HomePage() {
             <BestDishes />
             <Advertisements />
             <Events />
+            <Recommendations/>
         </div>
     );
 }
