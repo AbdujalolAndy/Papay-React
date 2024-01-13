@@ -24,3 +24,18 @@ export interface CartItem {
     price: number;
     image: string
 }
+
+export interface ChatMsg {
+    msg: string;
+    mb_id: string;
+    mb_image: string;
+    mb_nick: string;
+}
+
+export interface ChatGreetMsg {
+    msg: string;
+}
+
+export interface ChatInfoMsg {
+    total: number
+}
