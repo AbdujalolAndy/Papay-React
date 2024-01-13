@@ -16,7 +16,7 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { setTargetBoArticles } from "./slice";
 import { targetBoArticlesRetrieve } from "./selector";
-import { createSelector } from "reselect"
+import { createSelector } from "reselect";
 
 //Redux Slice
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -28,8 +28,6 @@ const retrieverTargetBoArticles = createSelector(
     targetBoArticlesRetrieve,
     (targetBoArticles) => ({ targetBoArticles })
 )
-
-
 
 export function CommunityPage() {
     //Initializations
@@ -100,13 +98,13 @@ export function CommunityPage() {
                                         <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild} />
                                     </TabPanel>
                                     <TabPanel value="2">
-                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild}/>
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild} />
                                     </TabPanel>
                                     <TabPanel value="3">
-                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild}/>
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild} />
                                     </TabPanel>
                                     <TabPanel value="4">
-                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild}/>
+                                        <TargetArticles targetBoArticles={targetBoArticles} setRebuild={setRebuild} />
                                     </TabPanel>
                                 </Box>
                                 <Box className="article_bott">

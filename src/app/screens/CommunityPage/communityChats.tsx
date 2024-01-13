@@ -1,10 +1,16 @@
-import React from "react"
+import React, { useEffect } from "react"
 import "../../../css/community.css"
 import { Avatar, Box, Container, Stack } from "@mui/material";
 import { Send } from "@mui/icons-material";
 
 export const CommunityChats = (props: any) => {
+    //Initializations
     const [messageList, setMessageList] = React.useState();
+
+    //Hooks
+    useEffect(()=>{
+        console.log("test")
+    },[])
     return (
         <Stack className="chat_frame">
             <Box className="chat_top">Jonli Muloqot</Box>
