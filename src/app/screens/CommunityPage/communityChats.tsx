@@ -8,12 +8,15 @@ import React, {
 import { Avatar, Box, Stack } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { verifiedMemberData } from "../../apiServices/verify";
+import {
+    sweetErrorHandling,
+    sweetFailureProvider,
+} from "../../../lib/sweetAlert";
+import assert from "assert";
 import { Definer } from "../../../lib/Definer";
 import { RippleBadge } from "../../MaterialTheme/styled";
 import { socketContext } from "../../Context/socket";
 import { ChatGreetMsg, ChatInfoMsg, ChatMsg } from "../../types/others";
-import { sweetErrorHandling, sweetFailureProvider } from "../../../lib/sweetAlert";
-import assert from "assert";
 
 const NewMessage = (data: any) => {
     if (data.new_message.mb_id == verifiedMemberData?._id) {
@@ -53,10 +56,8 @@ export function CommunityChats() {
     const textInput: any = useRef(null);
     const [message, setMessage] = useState<string>("");
 
-    //Hook
     useEffect(() => {
         socket.connect();
-        console.log("PRINTED");
 
         socket?.on("connect", function () {
             console.log("CLIENT: connected");
@@ -74,8 +75,8 @@ export function CommunityChats() {
         socket?.on("greetMsg", (msg: ChatGreetMsg) => {
             console.log("CLIENT: greet message");
             messagesList.push(
-                // @ts-ignore
-                <p style={{ textAlign: "center", fontSize: "large", fontFamily: "serif" }}>{msg.text}, dear {verifiedMemberData?.mb_nick ?? "guest"}</p>
+                //@ts-ignore
+                <p style={{ textAlign: "center", fontSize: "large", fontFamily: "serif", }}>{msg.text}, dear {verifiedMemberData?.mb_nick ?? "guest"}</p>
             );
             setMessagesList([...messagesList]);
         });
@@ -89,7 +90,8 @@ export function CommunityChats() {
             socket.disconnect();
         };
     }, [socket]);
-    //Handlers
+
+    /** HANDLERS */
     const getInputMessageHandler = useCallback(
         (e: any) => {
             const text = e.target.value;
@@ -101,6 +103,7 @@ export function CommunityChats() {
     const getKeyHandler = (e: any) => {
         try {
             if (e.key == "Enter") {
+                assert.ok(verifiedMemberData, Definer.auth_err1)
                 assert.ok(message, Definer.input_err3);
                 onClickHandler();
             }

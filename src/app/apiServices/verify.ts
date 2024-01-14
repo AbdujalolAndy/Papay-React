@@ -18,9 +18,4 @@ if (cookie.get("access_token")) {
     localStorage.removeItem("member_data")
 }
 
-
-
-console.log("=== verify ====");
-console.log(member_data);
-
 export const verifiedMemberData = member_data ? member_data : null;

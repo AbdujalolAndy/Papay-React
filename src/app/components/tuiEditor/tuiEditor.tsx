@@ -71,7 +71,6 @@ export const TuiEditor = (props: any) => {
             const art_content = editor?.getInstance().getHTML();
 
             communityArticleData.art_content = art_content;
-            console.log("communityArticleData:", communityArticleData);
             assert.ok(
                 communityArticleData.art_content !== "" &&
                 communityArticleData.bo_id !== "" &&
@@ -155,7 +154,6 @@ export const TuiEditor = (props: any) => {
                 hooks={{
                     addImageBlobHook: async (image: any, callback: any) => {
                         const uploadImageURL = await uploadImage(image);
-                        console.log("uploadImageURL:", uploadImageURL);
                         callback(uploadImageURL);
                         return false;
                     },

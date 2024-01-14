@@ -19,7 +19,6 @@ class OrderServiceApi {
             assert.ok(result?.data, Definer.general_err1)
             assert.ok(result?.data?.state != "fail", result?.data?.message)
             const order: any = result.data.data;
-            console.log("order::", order)
             return true
         } catch (err: any) {
             console.log(`ERROR::: createOrder ${err.message}`)

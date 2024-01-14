@@ -15,7 +15,7 @@ class MemberApiService {
         try {
             const url = `${this.path}/login`,
                 result = await axios.post(url, data, { withCredentials: true });
-            console.log("state::", result.data.state);
+            console.log("loginRequest state::", result.data.state);
             assert.ok(result?.data, Definer.general_err1)
             assert.ok(result?.data?.state != "fail", result?.data?.message)
             const member: Member = result.data.data;
@@ -104,7 +104,7 @@ class MemberApiService {
 
             assert.ok(result?.data, Definer.general_err1);
             assert.ok(result?.data?.state != "fail", result?.data?.message);
-            console.log("state:", result.data.state);
+            console.log("updateMemberData state:", result.data.state);
 
             const member: Member = result.data.data;
             localStorage.setItem("member_data", JSON.stringify(member));

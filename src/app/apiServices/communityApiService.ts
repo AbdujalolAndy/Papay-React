@@ -14,7 +14,6 @@ class CommunityApiService {
             let formData = new FormData();
             formData.append("community_image", image);
 
-            console.log(image);
             const result = await axios(`${this.path}/community/image`, {
                 method: "POST",
                 data: formData,
@@ -25,7 +24,7 @@ class CommunityApiService {
 
             assert.ok(result?.data, Definer.general_err1);
             assert.ok(result?.data?.state != "fail", result?.data?.message);
-            console.log("state:", result.data.state);
+            console.log("uploadImageToServer state:", result.data.state);
 
             const image_name: string = result.data.data;
             return image_name;
@@ -42,7 +41,7 @@ class CommunityApiService {
 
             assert.ok(result?.data, Definer.general_err1);
             assert.ok(result?.data?.state != "fail", result?.data?.message);
-            console.log("state:", result.data.state);
+            console.log("createArticle state:", result.data.state);
 
             const article: BoArticle = result.data.data;
             return article;
@@ -58,7 +57,7 @@ class CommunityApiService {
                 url += `&order=${data.order}`
             }
             const result = await axios.get(url, { withCredentials: true });
-            console.log("state::", result.data.state);
+            console.log("getBoArticles state::", result.data.state);
             assert.ok(result?.data, Definer.general_err1)
             assert.ok(result?.data?.state != "fail", result?.data?.message)
             const boArticles: BoArticle[] = result.data.data;
@@ -72,7 +71,7 @@ class CommunityApiService {
         try {
             const url = `${this.path}/member-liken`,
                 result = await axios.post(url, data, { withCredentials: true });
-            console.log("state::", result.data.state);
+            console.log("boArticlesLikeTarget state::", result.data.state);
             assert.ok(result?.data, Definer.general_err1)
             assert.ok(result?.data?.state != "fail", result?.data?.message)
             return result
@@ -136,7 +135,7 @@ class CommunityApiService {
 
             assert.ok(result?.data, Definer.general_err1);
             assert.ok(result?.data?.state != "fail", result?.data?.message);
-            console.log("state:", result.data.state);
+            console.log("getChosenArticle state:", result.data.state);
 
             const article: BoArticle = result.data.data;
             return article;
