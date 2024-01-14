@@ -58,7 +58,7 @@ export function MySettings() {
             const memberService = new MemberApiService();
             const result = await memberService.updateMemberData(memberUpdate);
             assert.ok(result, Definer.general_err1);
-            await sweetTopSmallSuccessAlert(
+            sweetTopSmallSuccessAlert(
                 "Information modified successfully!",
                 700,
                 false

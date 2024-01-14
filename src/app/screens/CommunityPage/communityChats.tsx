@@ -58,7 +58,6 @@ export function CommunityChats() {
 
     useEffect(() => {
         socket.connect();
-
         socket?.on("connect", function () {
             console.log("CLIENT: connected");
         });
@@ -83,7 +82,7 @@ export function CommunityChats() {
 
         socket?.on("infoMsg", (msg: ChatInfoMsg) => {
             console.log("CLIENT: info message");
-            setOnlineUsers(msg.total);
+            setOnlineUsers(verifiedMemberData ? msg.total : 0);
         });
 
         return () => {
